@@ -1,0 +1,49 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.Python
+env/
+venv/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Data files (PDFs are copyrighted, don't upload)
+data/raw/*.pdf
+
+# Large result files (per-document outputs too large for git)
+results/documents/
+results/evaluations/
+results/runs/
+results/qa/questions/
+results/qa/answers/
+results/qa/evaluations/
+results/human_evaluation/*.html
+results/human_evaluation/*.csv
+
+# Temporary files
+*.zip
+*.log
+*.tmp
+
+# Verification scripts
+src/analysis/verify_all_claims.py
+results/verification_report.json
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Compiled paper files
+paper/ieee-access-submission/*.pdf
+paper/ieee-access-submission/*.synctex.gz
+paper/resubmissions/

@@ -1,0 +1,82 @@
+[
+  {
+    "doc_id": "196-Li-Open-Access-Publishing",
+    "method": "pac_position_aware",
+    "original_words": 8464,
+    "output_words": 2000,
+    "token_reduction_pct": 76.37051039697542,
+    "processing_time_seconds": 0.013444900512695312
+  },
+  {
+    "doc_id": "A COMPREHENSIVE BENCHMARK FOR LARGE LANGUAGE MODELS TOWARDS COMPUTER SCIENCE MASTERY",
+    "method": "pac_position_aware",
+    "original_words": 25532,
+    "output_words": 1732,
+    "token_reduction_pct": 93.21635594548017,
+    "processing_time_seconds": 0.03872179985046387
+  },
+  {
+    "doc_id": "A Survey on Medical Large Language Models",
+    "method": "pac_position_aware",
+    "original_words": 24582,
+    "output_words": 1782,
+    "token_reduction_pct": 92.75079326336343,
+    "processing_time_seconds": 0.04160284996032715
+  },
+  {
+    "doc_id": "Analysis of Research Trends in Computer Science- A Network Approach",
+    "method": "pac_position_aware",
+    "original_words": 4824,
+    "output_words": 2000,
+    "token_reduction_pct": 58.540630182421225,
+    "processing_time_seconds": 0.008380889892578125
+  },
+  {
+    "doc_id": "DEVELOPING EFFECTIVE LEARNING OUTCOMES",
+    "method": "pac_position_aware",
+    "original_words": 4888,
+    "output_words": 1888,
+    "token_reduction_pct": 61.37479541734861,
+    "processing_time_seconds": 0.010254144668579102
+  },
+  {
+    "doc_id": "Enterprise Risk Management ",
+    "method": "pac_position_aware",
+    "original_words": 4201,
+    "output_words": 1201,
+    "token_reduction_pct": 71.41156867412522,
+    "processing_time_seconds": 0.008564949035644531
+  },
+  {
+    "doc_id": "Etat de l\u2019art sur l\u2019application des bandits multi-bras",
+    "method": "pac_position_aware",
+    "original_words": 7781,
+    "output_words": 1581,
+    "token_reduction_pct": 79.6812749003984,
+    "processing_time_seconds": 0.016643047332763672
+  },
+  {
+    "doc_id": "From Tarzan to Tolkien- Controlling the Language Proficiency Level of LLMs for Content Generation",
+    "method": "pac_position_aware",
+    "original_words": 13988,
+    "output_words": 1200,
+    "token_reduction_pct": 91.42121818701744,
+    "processing_time_seconds": 0.02046370506286621
+  },
+  {
+    "doc_id": "Generative AI in Medicine",
+    "method": "pac_position_aware",
+    "original_words": 16135,
+    "output_words": 1200,
+    "token_reduction_pct": 92.56275178184072,
+    "processing_time_seconds": 0.02662181854248047
+  },
+  {
+    "doc_id": "Guiding Clinical Reasoning with Large Language Models via Knowledge Seeds",
+    "method": "pac_position_aware",
+    "original_words": 7068,
+    "output_words": 1668,
+    "token_reduction_pct": 76.4006791171477,
+    "processing_time_seconds": 0.011201143264770508
+  }
+]

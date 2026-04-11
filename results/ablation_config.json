@@ -1,0 +1,16 @@
+{
+  "budgets": [
+    1000,
+    2000,
+    3000,
+    5000
+  ],
+  "methods": [
+    "truncation",
+    "fixed_size_first_last",
+    "semantic_breakpoint",
+    "pac_position_aware"
+  ],
+  "document_count": 218,
+  "timestamp": "2026-04-08T00:11:02"
+}

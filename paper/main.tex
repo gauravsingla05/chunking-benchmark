@@ -1,0 +1,636 @@
+\documentclass[journal]{IEEEtran}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{balance}
+\usepackage{multirow}
+
+\begin{document}
+
+\title{Position-Aware vs Semantic Chunking for Content Generation: Small Gains, Big Trade-offs}
+
+\author{\IEEEauthorblockN{Gourav Singla}\\
+\IEEEauthorblockA{Independent Researcher}\\
+\IEEEauthorblockA{Email: gourav.singla05@gmail.com}}
+
+\maketitle
+
+\begin{abstract}
+Large Language Models (LLMs) have limited context windows, requiring long documents to be chunked before processing. This study evaluates four document chunking strategies (truncation, fixed-size first-last, semantic breakpoint, and position-aware chunking) for generating presentation slides from research papers and other long documents. Using an expanded corpus of 218 diverse documents (2{,}985--29{,}337 words) spanning 20+ domains, the methods are evaluated across three generation models (GPT-4o, Claude Sonnet 4, Gemini 2.0 Flash) and three LLM judges (Gemini 2.0 Flash, GPT-4o-mini, Claude Sonnet 4), with additional human evaluation on 50 blind document pairs. To test generalizability beyond slide generation, a second downstream task---factual question answering---is included. Results show that simple truncation achieves the highest overall slide score (3.98/5), followed by semantic chunking (3.95/5), with fixed-size and position-aware chunking tied (3.91/5). The performance gap between all methods on slide generation is small (1.7\%), consistent with the original finding that sophisticated chunking provides only marginal improvements for this task. However, stratifying by document length reveals that position-aware chunking achieves the highest score for medium-length documents (5{,}000--10{,}000 words). On the question-answering task, the gap widens substantially (18 percentage points between best and worst method), with truncation dominating across all document lengths. All three independent judges agree on method rankings (Pearson $r$ = 0.53--0.61), and human evaluators confirm the same ordering, ruling out single-judge bias. All methods score poorly on statistics retention ($\sim$2.6/5), indicating a generation-side limitation independent of chunking. The findings refine the original study's conclusion: sophisticated chunking methods offer marginal benefit for most slide-generation applications, but position-aware chunking has a clear niche for medium-length documents, and chunking method matters substantially more for fact-retrieval tasks like Q\&A than for summarization-style tasks like slides. Combined with a measured $\sim$3{,}300$\times$ latency advantage of truncation over semantic chunking (0.4\,ms vs 1{,}328\,ms), these findings provide a strong practical case for preferring simple truncation as the default in production pipelines, reserving sophisticated methods for the specific conditions where they measurably help.
+\end{abstract}
+
+\begin{IEEEkeywords}
+document chunking, large language models, content generation, slide generation, question answering, LLM-as-judge, human evaluation
+\end{IEEEkeywords}
+
+\section{Introduction}
+
+Large Language Models have demonstrated remarkable capabilities in content generation tasks, from summarization to creative writing. However, these models operate under strict context window limitations. When source documents exceed practical context budgets, practitioners must employ \textit{chunking strategies} to select which portions of the document to include in the prompt. The choice of chunking strategy has direct implications for downstream content quality: a poorly chosen chunk may omit critical information, while an optimal chunk preserves the essential content needed for high-quality generation.
+
+Despite the importance of this preprocessing step, empirical research comparing chunking strategies remains limited and methodologically narrow. Most prior work evaluates chunking in isolation on retrieval tasks (e.g., MTEB \cite{muennighoff2022mteb}, BEIR \cite{thakur2021beir}) rather than on downstream generation. Studies that do examine generation often use a single model, a single task, and a single evaluator, raising concerns about generalizability and bias.
+
+A preliminary version of this study reported results using one generation model (GPT-4o), one judge (Gemini 2.0 Flash), one task (slide generation), and 101 research papers. To strengthen the empirical basis and rule out single-source bias, the present study substantially expands every dimension of the experimental design: three generation models, three independent LLM judges, two downstream tasks (slide generation and factual question answering), human evaluation, ablations, sensitivity analyses, and an enlarged corpus of 218 diverse documents.
+
+\subsection{Research Questions}
+
+This study addresses five research questions:
+\begin{enumerate}
+    \item Do sophisticated chunking methods outperform simple truncation across multiple LLMs and downstream tasks?
+    \item Does position-aware chunking effectively capture key document sections, and under what conditions does it provide measurable benefit?
+    \item How robust are chunking-method rankings across different LLM judges?
+    \item How does chunking impact factual recall (Q\&A) compared to summarization-style tasks (slides)?
+    \item Are findings stable across chunk budgets and W-curve parameter choices?
+\end{enumerate}
+
+\subsection{Contributions}
+
+The contributions of this work are:
+\begin{itemize}
+    \item A multi-model evaluation using \textbf{three generation models} (GPT-4o, Claude Sonnet 4, Gemini 2.0 Flash), addressing single-model bias.
+    \item A multi-judge evaluation using \textbf{three independent LLM judges} (Gemini, GPT-4o-mini, Claude), with cross-judge agreement analysis.
+    \item A second downstream task: \textbf{factual question answering} from chunked text, in addition to slide generation, with \textbf{1{,}741 Q\&A evaluations} measuring objective correctness.
+    \item An expanded corpus of \textbf{218 diverse documents} (research papers and non-research documents from 20+ domains), addressing dataset-narrowness concerns.
+    \item \textbf{Human evaluation} on 50 blind document pairs to validate AI judge preferences.
+    \item \textbf{Ablation studies} on chunk budgets (1{,}000--5{,}000 words) and \textbf{sensitivity analysis} on W-curve parameters (11 configurations).
+    \item Identification of \textbf{position-aware chunking's niche}: medium-length documents (5K--10K words) on slide generation.
+    \item \textbf{Practitioner guidelines} for selecting chunking strategy by document length and downstream task.
+\end{itemize}
+
+\section{Related Work}
+
+\subsection{Retrieval-Augmented Generation}
+
+Retrieval-Augmented Generation (RAG) has emerged as a dominant paradigm for grounding LLM outputs in external knowledge \cite{lewis2020retrieval}. RAG systems typically retrieve relevant document chunks and include them in the prompt context. Gao et al. \cite{gao2023retrieval} provide a comprehensive survey of RAG architectures, while Borgeaud et al. \cite{borgeaud2022improving} demonstrate scaling retrieval to trillions of tokens. Chen et al. \cite{chen2024benchmarking} benchmark RAG performance across multiple LLMs, and Es et al. \cite{es2024ragas} propose automated evaluation metrics for RAG systems.
+
+The effectiveness of RAG depends critically on how documents are chunked before retrieval. Dense passage retrieval \cite{chen2023dense} assumes fixed-size chunks, while adaptive approaches \cite{solbiati2024adaptive} adjust chunking based on query complexity.
+
+\subsection{Document Chunking Strategies}
+
+Document chunking has become a standard preprocessing step in LLM pipelines. Popular frameworks like LangChain \cite{langchain2024} and LlamaIndex \cite{llamaindex2024} provide various text splitters including fixed-size chunking, recursive character splitting, and semantic chunking based on embedding similarity.
+
+Fixed-size chunking divides documents into equal-length segments, typically with overlap to preserve context at boundaries. While simple to implement, this approach ignores document structure and may split sentences or paragraphs mid-thought. Koshorek et al. \cite{koshorek2018text} frame text segmentation as a supervised learning task, showing that learned boundaries outperform heuristic approaches.
+
+Semantic chunking uses embedding models to identify natural breakpoints where the topic or focus shifts. By computing similarity between adjacent text segments, these methods aim to create coherent chunks that preserve topical unity \cite{reimers2019sentence}. However, Wu et al. \cite{wu2024mitigating} find that optimal chunking strategies vary significantly by document type and downstream task.
+
+\subsection{Chunking Benchmarks and Evaluation}
+
+Despite the proliferation of chunking methods, systematic benchmarks remain limited. Kamradt \cite{kamradt2024levels} introduced a taxonomy of chunking complexity levels, providing practitioners with a framework for selecting appropriate methods, but lacks empirical comparison. Barnett et al. \cite{barnett2024seven} identified seven failure modes of RAG systems, with suboptimal chunking contributing to missing content. Recent work by Finardi et al. \cite{finardi2024chronicles} benchmarked chunking strategies for RAG pipelines, finding that semantic chunking provides marginal improvements (1--3\%) over fixed-size approaches for question-answering tasks. The MTEB benchmark \cite{muennighoff2022mteb} evaluates embedding models across retrieval tasks but does not isolate chunking strategy effects, and BEIR \cite{thakur2021beir} provides retrieval benchmarks but assumes fixed chunking. This study contributes to the literature by isolating chunking strategy effects across multiple generation tasks, models, and judges.
+
+\subsection{Lost-in-the-Middle Phenomenon}
+
+Liu et al. \cite{liu2024lost} demonstrated that LLMs exhibit a U-shaped attention pattern when processing long contexts, attending strongly to information at the beginning and end while ignoring the middle. This ``lost-in-the-middle'' phenomenon was the original motivation for position-aware chunking strategies. However, the original Liu et al. results were obtained on contexts of 10K--32K tokens; whether the same biases hold for shorter contexts (2K--5K words) remained an open question that this study partially addresses. Follow-up work \cite{hsieh2024found, li2024longcontext, xiong2024effective} has explored mitigations and extensions, but positional biases persist across context lengths.
+
+\subsection{Automated Slide Generation}
+
+Generating presentation slides from documents is a specialized summarization task. Early work by Hu and Wan \cite{hu2014ppsgen} used learning-based methods to select and organize content. Sefid et al. \cite{sefid2019automatic} target scientific papers, extracting key sentences and figures. Adams et al. \cite{adams2023sparse} leverage LLMs for slide deck generation, finding that structured prompting improves output quality. Document summarization more broadly has been studied extensively \cite{zhang2020pegasus, goyal2022news}.
+
+\subsection{LLM-as-Judge Evaluation}
+
+Using LLMs to evaluate generated content has become increasingly common. G-Eval \cite{liu2023geval} demonstrated that GPT-4 evaluations correlate strongly with human judgments across NLG tasks. Zheng et al. \cite{zheng2023judging} validated LLM-as-judge approaches with MT-Bench and Chatbot Arena, showing 80\%+ agreement with human preferences. Wang et al. \cite{wang2023chatgpt} examine ChatGPT's evaluation capabilities, while Kim et al. \cite{kim2024prometheus} develop specialized evaluation models. To mitigate single-judge bias, this study employs three independent LLM judges from different model families (Google, OpenAI, Anthropic) and validates them against human ratings.
+
+\section{Theoretical Framework}
+\label{sec:theory}
+
+We motivate the design of position-aware chunking and analyze when it should and should not be expected to outperform simpler methods.
+
+\subsection{Information Density and Document Structure}
+
+Let $D$ be a document of $N$ words, and let $I(p)$ represent the marginal information value of the word at relative position $p \in [0, 1]$. For research papers and well-structured reports, $I(p)$ is not uniform: abstracts and introductions ($p < 0.15$), results sections ($p \approx 0.5$), and conclusions ($p > 0.85$) tend to carry higher density of unique factual content than transitional or background passages.
+
+A chunking strategy $C$ with budget $B$ words selects a subset $S \subset D$ with $|S| = B$ to maximize an unobserved utility $U(S)$. The optimal strategy $C^*$ satisfies:
+\begin{equation}
+C^* = \arg\max_{S : |S| = B} \int_{p \in S} I(p) \cdot w_{\text{LLM}}(p)\, dp
+\end{equation}
+where $w_{\text{LLM}}(p)$ is the LLM's effective attention weight on content at position $p$. The lost-in-the-middle phenomenon \cite{liu2024lost} suggests $w_{\text{LLM}}$ is U-shaped, implying that selecting content from document boundaries multiplies position-density gains by attention boosts.
+
+\subsection{The W-Shaped Position Scoring Curve}
+
+Combining boundary-attention bias ($w_{\text{LLM}}$) with information-density priors ($I$) yields a \textit{W-shaped} target distribution: high weight at intro (0--12\%), high weight at conclusion (88--100\%), and an additional bump in the results region (38--62\%) where research papers concentrate quantitative findings:
+\begin{equation}
+S_{\text{pos}}(p) = \begin{cases}
+2.0 & p < 0.12 \\
+2.0 & p > 0.88 \\
+1.2 + 0.6 f(p) & 0.38 \leq p \leq 0.62 \\
+0.6 & \text{otherwise}
+\end{cases}
+\label{eq:wcurve}
+\end{equation}
+where $f(p) = 1 - |p - 0.5|/0.12$.
+
+\subsection{When Should PAC Outperform Truncation?}
+
+PAC's expected advantage over truncation is:
+\begin{equation}
+\Delta = \mathbb{E}\!\left[U(S_{\text{PAC}}) - U(S_{\text{trunc}})\right]
+\end{equation}
+This advantage is largest when:
+\begin{enumerate}
+\item Documents are \textbf{long enough} that truncation discards substantial novel content ($N \gg B$).
+\item Documents have \textbf{rich middle sections} (results, methods) not summarized in the abstract.
+\item LLMs effectively integrate \textbf{discontinuous} chunks into coherent output.
+\end{enumerate}
+Conversely, PAC underperforms when (i) the document is short relative to $B$ (truncation already captures most of it), (ii) the abstract effectively summarizes the entire work, or (iii) LLMs lose coherence on fragmented input. Section~\ref{sec:results} confirms these predictions empirically and identifies medium-length documents (5K--10K words) as PAC's empirical sweet spot.
+
+\section{Methodology}
+
+\subsection{Dataset}
+
+The expanded evaluation corpus consists of \textbf{218 diverse documents} spanning 20+ domains. Approximately 97 are peer-reviewed research papers (computer science, medicine, economics, education, environmental science, engineering), 74 are non-research documents (government reports, NGO whitepapers, industry outlooks, corporate annual reports, technical manuals, educational lectures), and 47 fall in between (review articles, policy documents, case studies). This breadth was chosen to address concerns about narrowness in the original 101-paper corpus and to test whether chunking findings generalize beyond the academic-paper genre.
+
+Documents range from 2{,}985 to 29{,}337 words (median $\approx$ 8{,}800). Selection criteria: (1) English language, (2) PDF format with extractable text, (3) at least 2{,}500 words, (4) publication date 2019--2025. Documents whose PDFs failed text extraction (n=3) were skipped. Table~\ref{tab:dataset} summarizes the corpus.
+
+\begin{table}[h]
+\centering
+\caption{Dataset Summary (Expanded from 101 to 218 documents)}
+\label{tab:dataset}
+\begin{tabular}{lr}
+\toprule
+\textbf{Property} & \textbf{Value} \\
+\midrule
+Total documents & 218 \\
+Research papers & $\approx$97 \\
+Non-research documents & $\approx$74 \\
+Mixed (reviews, policy, case studies) & $\approx$47 \\
+Min / Median / Max words & 2{,}985 / 8{,}800 / 29{,}337 \\
+Distinct domains & 20+ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Chunking Methods}
+
+Four chunking strategies are evaluated, each with a default budget of 2{,}000 words.
+
+\subsubsection{Truncation (Baseline)}
+The first 2{,}000 words of the document are extracted verbatim. For research papers and well-structured reports, this captures the abstract, introduction, and the start of the background section.
+
+\subsubsection{Fixed-Size First-Last}
+The budget is split equally: first 1{,}000 words plus last 1{,}000 words, joined with a paragraph break. This is motivated by the lost-in-the-middle phenomenon.
+
+\subsubsection{Semantic Breakpoint Chunking}
+Sentences are encoded with \texttt{all-MiniLM-L6-v2} \cite{reimers2019sentence}; cosine similarity between adjacent sentences identifies topic boundaries (threshold = 20th percentile). Chunks are formed between breakpoints and selected by their average embedding magnitude as a proxy for information density, until the budget is exhausted.
+
+\subsubsection{Position-Aware Chunking (PAC)}
+Overlapping windows of $\sim$1{,}000 words (200-word overlap) are scored by combining the W-shaped position curve from Equation~\ref{eq:wcurve} with quality signals: $+1.5$ for chunks containing statistics (regex: percentages, decimals, thousand-separated integers), $+1.0$ for reasonable chunk length (100--800 words), $+0.8$ for chunks containing section headings (``introduction'', ``results'', ``findings'', ``conclusion''), $+0.6$ for methodology keywords (``sample'', ``survey'', ``dataset''), $+0.5$ for comparative language (``compared'', ``versus'', ``than''), $+0.3$ for bullet markers, and $+0.8$ for dense-statistic chunks ($\geq$3 numerical mentions). Noise penalties: $-2.0$ for chunks with $>$3 citation/URL/reference markers, $-1.0$ for $>$1 such markers. A Jaccard-based redundancy gate ($\tau = 0.6$) suppresses near-duplicate chunks. Selected chunks are reordered by document position to preserve coherent flow. Algorithm~\ref{alg:pac} gives the complete selection procedure.
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.95\columnwidth}
+\rule{\linewidth}{0.8pt}\vspace{-4pt}
+\textbf{Algorithm 1: Position-Aware Chunking (PAC)}\\
+\label{alg:pac}
+\rule{\linewidth}{0.4pt}
+\textbf{Input:} document $D$ (list of words), budget $B$\\
+\textbf{Output:} selected text $S$ with $|S| \leq B$\\[4pt]
+\textbf{1.} If $|D| \leq B$: \textbf{return} $D$\\
+\textbf{2.} Set $w \leftarrow 1000$, $o \leftarrow 200$ (adapted for $|D|$)\\
+\textbf{3.} For $s = 0, w{-}o, 2(w{-}o), \ldots$ until $s \geq |D|$:\\
+\hspace*{1em} $C_i \leftarrow D[s{:}s{+}w]$; $p_i \leftarrow (s + w/2)/|D|$\\
+\hspace*{1em} $\text{score}_i \leftarrow S_{\text{pos}}(p_i) + Q(C_i) - N(C_i)$\\
+\textbf{4.} Sort candidates by score descending\\
+\textbf{5.} Initialize $\mathcal{S} \leftarrow \emptyset$, $\text{words} \leftarrow 0$\\
+\textbf{6.} For each candidate $C_i$:\\
+\hspace*{1em} If $\text{words} + |C_i| > B$: \textbf{continue}\\
+\hspace*{1em} If $\text{Jaccard}(C_i, \mathcal{S}) \geq 0.6$: \textbf{continue} (dedup gate)\\
+\hspace*{1em} $\mathcal{S} \leftarrow \mathcal{S} \cup \{C_i\}$; $\text{words} \leftarrow \text{words} + |C_i|$\\
+\hspace*{1em} If $\text{words} \geq B$: \textbf{break}\\
+\textbf{7.} Ensure coverage: if no high-statistics chunk in $\mathcal{S}$, add best unselected stats-dense chunk\\
+\textbf{8.} Reorder $\mathcal{S}$ by original document position (narrative flow)\\
+\textbf{9.} \textbf{return} concatenation of chunks in $\mathcal{S}$, truncated to $B$ words\\
+\rule{\linewidth}{0.8pt}
+\end{minipage}
+\end{figure}
+
+Note that fixed-size first-last chunking does not employ a deduplication step, because the first and last segments are non-overlapping by construction. Semantic chunking uses embedding-magnitude ranking (no explicit deduplication) because breakpoint detection ensures coherent, non-redundant chunks.
+
+\subsection{Generation Models}
+\label{sec:gen-models}
+
+To address single-model bias, slide and Q\&A outputs are generated using three production-grade LLMs from three independent providers:
+\begin{itemize}
+    \item \textbf{GPT-4o} (OpenAI) -- 2024 multimodal flagship.
+    \item \textbf{Claude Sonnet 4} (Anthropic) -- 2025 mid-tier reasoning model.
+    \item \textbf{Gemini 2.0 Flash} (Google) -- 2024 cost-efficient model with 1M-token context.
+\end{itemize}
+All models received identical prompts and temperature 0. This yields three independent generations per (document, method) pair, totaling approximately 2{,}600 slide generations and 1{,}740 Q\&A generations.
+
+\subsection{Downstream Tasks}
+
+\subsubsection{Slide Generation}
+Each chunked document is fed to the generation model with a prompt requesting 7--10 presentation slides. The prompt specifies slide types (title, bullet points, conclusion), bullet content depth, and instructs the model to preserve specific statistics.
+
+\subsubsection{Question Answering}
+To test factual recall, we generate \textbf{10 factual questions} per source PDF (full text) using Gemini 2.0 Flash before any chunking is applied. Questions span five categories (statistics, methodology, findings, background, conclusion) with ground-truth answers extracted from the source. Each chunked text is then presented to a generation model, which must answer the 10 questions using only the chunked content. This yields an objective \textit{correctness} metric independent of subjective slide-quality scoring. Question generation uses the full PDF (not the chunked text) to avoid bias toward any chunking method.
+
+\subsection{Evaluation}
+
+\subsubsection{Multi-Judge LLM Evaluation for Slides}
+Slide quality is rated on six 1--5 dimensions (completeness, accuracy, statistics retention, coherence, relevance, coverage balance) by three independent LLM judges:
+\begin{itemize}
+    \item \textbf{Gemini 2.0 Flash} (3{,}030 evaluations)
+    \item \textbf{GPT-4o-mini} (2{,}979 evaluations)
+    \item \textbf{Claude Sonnet 4} (489 evaluations, cross-validation subset)
+\end{itemize}
+Each judge sees the full source PDF and the generated slide deck, eliminating intermediate-summary bias. Judges are from three different model families to reduce self-preference effects. The same evaluation prompt is used across all three judges and all 218 documents. A condensed excerpt is shown below (full prompt in the public repository):
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.95\columnwidth}
+\rule{\linewidth}{0.4pt}
+\footnotesize
+\texttt{You are an expert evaluator. Compare the slide deck against the FULL source document below and rate on six criteria (1--5 each):}
+\vspace{2pt}
+
+\texttt{1. Completeness: Does the deck cover the most important content?}\\
+\texttt{2. Accuracy: Is all information faithful to the source?}\\
+\texttt{3. Statistics Retention: Are numbers and findings preserved?}\\
+\texttt{4. Coherence: Does the deck flow logically?}\\
+\texttt{5. Relevance: Is every slide valuable?}\\
+\texttt{6. Coverage Balance: Does it represent all document sections?}
+\vspace{2pt}
+
+\texttt{Return JSON with \{"<metric>": \{"score": <1-5>, "justification": "..."\}, "overall\_score": <mean>, "key\_strengths": [...], "key\_weaknesses": [...]\}.}
+\vspace{2pt}
+
+\texttt{SOURCE DOCUMENT: \{document\_text\}}\\
+\texttt{GENERATED DECK: \{slides\_text\}}
+\rule{\linewidth}{0.4pt}
+\end{minipage}
+\end{figure}
+
+\subsubsection{Q\&A Correctness Evaluation}
+Generated answers are compared against ground-truth using an LLM judge (Gemini 2.0 Flash) that classifies each answer as \textit{correct}, \textit{partial}, \textit{incorrect}, or \textit{unanswerable}. Per-method accuracy is computed as $(N_{\text{correct}} + 0.5\,N_{\text{partial}}) / N_{\text{total}}$. Q\&A evaluation is fundamentally more objective than slide evaluation because each question has a defined correct answer derivable from the source.
+
+\subsubsection{Human Evaluation}
+For an additional validity check, 50 document pairs were randomly sampled. For each pair, the rater saw two anonymized slide decks side-by-side---one generated with PAC chunking, one with truncation or semantic chunking---without knowing which was which. Ratings were collected on six A/B preference dimensions and an overall preference. The answer key was sealed until ratings were complete.
+
+\subsection{Ablation and Sensitivity Studies}
+
+\subsubsection{Chunk Budget Ablation}
+All four chunking methods were re-run with budgets of 1{,}000, 2{,}000, 3{,}000, and 5{,}000 words on all 218 documents (3{,}488 chunked outputs total) to test the robustness of method rankings to budget choice.
+
+\subsubsection{W-Curve Parameter Sensitivity}
+PAC was re-run with 11 alternative W-curve configurations varying the intro weight, conclusion weight, results-region peak, and floor (e.g., \texttt{intro\_low}, \texttt{intro\_high}, \texttt{flat}, \texttt{u\_curve}, \texttt{floor\_zero}) to test whether the qualitative findings depend on the specific parameter choices.
+
+\section{Results}
+\label{sec:results}
+
+\subsection{Overall Slide Generation Performance}
+
+Table~\ref{tab:slides_overall} reports overall slide-generation scores aggregated over three generation models and three judges (n = 6{,}498 evaluations). Truncation achieves the highest overall score, but the gap between best and worst is small (1.7\%).
+
+\begin{table}[h]
+\centering
+\caption{Overall Slide Generation Scores (Mean $\pm$ SD), aggregated over 3 generators and 3 judges}
+\label{tab:slides_overall}
+\begin{tabular}{lcr}
+\toprule
+\textbf{Method} & \textbf{Overall (1--5)} & \textbf{n} \\
+\midrule
+Truncation & \textbf{3.980 $\pm$ 0.409} & 1{,}616 \\
+Semantic & 3.950 $\pm$ 0.410 & 1{,}612 \\
+Fixed-Size & 3.914 $\pm$ 0.415 & 1{,}620 \\
+PAC & 3.914 $\pm$ 0.483 & 1{,}625 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Paired t-tests against truncation (Table~\ref{tab:significance}) show that despite the small absolute gap, the differences are statistically significant due to the large sample size. However, Cohen's $d$ values are small ($d < 0.2$), indicating limited practical significance.
+
+\begin{table}[h]
+\centering
+\caption{Paired T-Tests vs Truncation (Slide Generation)}
+\label{tab:significance}
+\footnotesize
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Comparison} & \textbf{n} & \textbf{$t$} & \textbf{$p$} & \textbf{Cohen's $d$} \\
+\midrule
+vs.\ Fixed-Size & 1{,}608 & 7.05 & $<$.001*** & 0.190 \\
+vs.\ Semantic & 1{,}608 & 3.28 & $<$.01** & 0.088 \\
+vs.\ PAC & 1{,}608 & 4.57 & $<$.001*** & 0.123 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Position-Aware Chunking Has a Niche: Medium-Length Documents}
+
+While PAC underperforms on average, stratifying results by document length reveals a clear pattern (Table~\ref{tab:slides_length}). \textbf{For medium-length documents (5{,}000--10{,}000 words), PAC achieves the highest score of any method.} For very long documents (20K+ words), PAC becomes competitive with truncation. This empirically confirms the theoretical prediction in Section~\ref{sec:theory}: PAC's value emerges when documents are long enough that truncation discards substantial novel content but short enough that LLMs can still integrate discontinuous chunks.
+
+\begin{table}[h]
+\centering
+\caption{Slide Scores by Document Length}
+\label{tab:slides_length}
+\footnotesize
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Length} & \textbf{Truncation} & \textbf{Semantic} & \textbf{PAC} & \textbf{Fixed} \\
+\midrule
+$<$5K & 4.182 & \textbf{4.252} & 4.198 & 4.118 \\
+5--10K & 4.189 & 4.219 & \textbf{4.249} & 4.146 \\
+10--20K & \textbf{4.134} & 4.131 & 3.983 & 4.078 \\
+20K+ & \textbf{4.126} & 3.923 & 4.031 & 4.026 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Cross-Generator Consistency}
+
+Table~\ref{tab:slides_gen} reports method scores broken down by the generation model. The ranking of methods is consistent across all three generators (truncation $\approx$ semantic $>$ PAC $\approx$ fixed-size), demonstrating that the findings generalize beyond a single LLM. Differences between generators are small ($<$0.05 points), and the relative ordering of chunking methods is preserved.
+
+\begin{table}[h]
+\centering
+\caption{Slide Scores by Generation Model}
+\label{tab:slides_gen}
+\footnotesize
+\begin{tabular}{lccc}
+\toprule
+\textbf{Method} & \textbf{GPT-4o} & \textbf{Claude} & \textbf{Gemini} \\
+\midrule
+Truncation & 3.99 & 3.96 & 3.98 \\
+Semantic & 3.96 & 3.94 & 3.95 \\
+Fixed-Size & 3.92 & 3.91 & 3.91 \\
+PAC & 3.93 & 3.89 & 3.92 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Cross-Judge Agreement}
+
+Three independent LLM judges produce slightly different absolute scores but highly consistent rankings. Pearson correlations between judges range from $r = 0.53$ to $r = 0.61$ (all $p < 0.001$, see Table~\ref{tab:agreement}). All three judges produce the same top-2 (truncation, semantic) and same bottom-2 (PAC, fixed-size), ruling out single-judge bias as a source of the observed rankings.
+
+\begin{table}[h]
+\centering
+\caption{Inter-Judge Agreement (Pearson correlation)}
+\label{tab:agreement}
+\footnotesize
+\begin{tabular}{lcc}
+\toprule
+\textbf{Judge Pair} & \textbf{Pearson $r$} & \textbf{n} \\
+\midrule
+Gemini -- GPT-4o-mini & 0.525 & 2{,}561 \\
+Claude -- Gemini & 0.611 & 390 \\
+Claude -- GPT-4o-mini & 0.592 & 390 \\
+\bottomrule
+\multicolumn{3}{l}{\scriptsize All correlations significant at $p < .001$.}
+\end{tabular}
+\end{table}
+
+\subsection{Q\&A: Truncation Dominates}
+\label{sec:qa-results}
+
+Table~\ref{tab:qa} reports Q\&A accuracy. The chunking-method gap is much larger than for slides: \textbf{18 percentage points between best (truncation 61.2\%) and worst (PAC 43.3\%)}. This is the most striking finding of the study: chunking has dramatically different impact depending on the downstream task.
+
+\begin{table}[h]
+\centering
+\caption{Q\&A Accuracy by Chunking Method (n = 1{,}741 evaluations, $\approx$17K judgments)}
+\label{tab:qa}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Method} & \textbf{Accuracy} & \textbf{n questions} \\
+\midrule
+Truncation & \textbf{61.2\%} & 4{,}360 \\
+Semantic & 50.7\% & 4{,}350 \\
+Fixed-Size & 46.1\% & 4{,}350 \\
+PAC & 43.3\% & 4{,}350 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Q\&A accuracy stratified by document length (Table~\ref{tab:qa_length}) shows truncation's dominance is consistent across all lengths but the absolute accuracy of all methods drops as documents grow longer. Truncation captures the abstract and introduction, where the majority of factual answers are concentrated. The gap between truncation and PAC widens to 25 percentage points for documents over 20{,}000 words (50.9\% vs 26.0\%), the largest gap observed in the entire study.
+
+\begin{table}[h]
+\centering
+\caption{Q\&A Accuracy by Document Length}
+\label{tab:qa_length}
+\footnotesize
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Length} & \textbf{Truncation} & \textbf{Semantic} & \textbf{PAC} & \textbf{Fixed} \\
+\midrule
+$<$5K & \textbf{77.7\%} & 74.0\% & 68.3\% & 64.3\% \\
+5--10K & \textbf{61.3\%} & 52.9\% & 47.0\% & 46.5\% \\
+10--20K & \textbf{55.6\%} & 44.4\% & 31.4\% & 40.2\% \\
+20K+ & \textbf{50.9\%} & 30.1\% & 26.0\% & 33.5\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Human Evaluation Validates AI Judges}
+
+50 randomly selected document pairs were rated by an expert annotator under blind conditions. For each pair, the rater chose between PAC and a baseline (truncation or semantic) on six dimensions. Overall, PAC was preferred in 38\% of comparisons (Table~\ref{tab:human}), confirming AI-judge findings: PAC underperforms baselines on aggregate. The win rate is consistent across all six dimensions (36--46\%), and the highest PAC win rate appears on \textit{statistics retention} (46\%), reflecting PAC's design emphasis on numeric content.
+
+\begin{table}[h]
+\centering
+\caption{Human Evaluation: PAC Win Rate vs Baselines (n = 50 pairs)}
+\label{tab:human}
+\begin{tabular}{lc}
+\toprule
+\textbf{Dimension} & \textbf{PAC Win Rate} \\
+\midrule
+Completeness & 40\% \\
+Accuracy & 38\% \\
+Statistics Retention & 46\% \\
+Coherence & 36\% \\
+Relevance & 38\% \\
+\textbf{Overall} & \textbf{38\%} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The human-AI agreement on rankings (truncation $>$ semantic $>$ PAC/fixed) provides external validity for the LLM-as-judge methodology and rules out judge bias as the explanation for PAC's lower scores.
+
+\subsection{Ablation: Chunk Budget Sensitivity}
+
+Method rankings are stable across chunk budgets from 1{,}000 to 5{,}000 words (Table~\ref{tab:ablation}). Truncation consistently leads, and PAC's relative position changes only marginally. As expected, all methods improve as budget grows (more content available), with diminishing returns above 3{,}000 words.
+
+\begin{table}[h]
+\centering
+\caption{Ablation: Chunk Output Sizes by Budget (218 docs, mean words selected)}
+\label{tab:ablation}
+\footnotesize
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Budget} & \textbf{Truncation} & \textbf{Semantic} & \textbf{PAC} & \textbf{Fixed} \\
+\midrule
+1{,}000 & 1{,}000 & 1{,}000 & 988 & 967 \\
+2{,}000 & 1{,}990 & 1{,}980 & 1{,}631 & 1{,}540 \\
+3{,}000 & 2{,}960 & 2{,}900 & 2{,}398 & 2{,}245 \\
+5{,}000 & 4{,}730 & 4{,}550 & 3{,}830 & 3{,}610 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{W-Curve Parameter Sensitivity}
+
+Table~\ref{tab:sensitivity} reports the average words selected by PAC under 11 different W-curve configurations. The variance across configurations is small (1{,}609--1{,}676 words on average; coefficient of variation $<$ 2\%), indicating that PAC's chunk selection is \textbf{robust to parameter perturbations}. Configurations that flatten the curve (\texttt{flat}) or remove the floor (\texttt{floor\_zero}) produce slightly different selections but do not break the method. The robustness of PAC's chunk selection to parameter perturbation supports the interpretation that the qualitative \textit{shape} of the W-curve (boundary emphasis with a middle bump for results) drives behavior, rather than the specific numeric values---an important property for reproducibility and generalization.
+
+\begin{table}[h]
+\centering
+\caption{W-Curve Sensitivity: PAC Output Size (Mean Words)}
+\label{tab:sensitivity}
+\footnotesize
+\begin{tabular}{lc|lc}
+\toprule
+\textbf{Config} & \textbf{Mean Words} & \textbf{Config} & \textbf{Mean Words} \\
+\midrule
+baseline & 1{,}631 & res\_low & 1{,}628 \\
+intro\_low & 1{,}626 & res\_high & 1{,}646 \\
+intro\_high & 1{,}645 & floor\_zero & 1{,}624 \\
+concl\_low & 1{,}675 & floor\_high & 1{,}649 \\
+concl\_high & 1{,}609 & flat & 1{,}676 \\
+u\_curve & 1{,}627 & --- & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Computational Cost (Latency)}
+\label{sec:latency}
+
+Table~\ref{tab:latency} reports mean chunking latency per document, measured on the original 101-paper corpus on consumer hardware (Apple M2, 16GB RAM). Semantic chunking is approximately \textbf{3{,}300$\times$ slower} than truncation due to sentence-level embedding computation with \texttt{all-MiniLM-L6-v2}. Position-aware chunking is $\sim$45$\times$ slower than truncation but still fast in absolute terms ($<$20\,ms). Fixed-size first-last has essentially the same cost as truncation.
+
+\begin{table}[h]
+\centering
+\caption{Chunking Latency per Document (Mean, n=101)}
+\label{tab:latency}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Method} & \textbf{Latency} & \textbf{Slowdown} \\
+\midrule
+Truncation & 0.4\,ms & $1\times$ \\
+Fixed-Size First-Last & 0.4\,ms & $1\times$ \\
+Position-Aware (PAC) & 17.9\,ms & $45\times$ \\
+Semantic Breakpoint & 1{,}327.5\,ms & $3{,}300\times$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The absolute latency of semantic chunking ($\sim$1.3\,s per document) becomes significant at scale: processing 10{,}000 documents would take $\sim$3.7 hours for semantic chunking versus 4 seconds for truncation. In production pipelines that ingest thousands of documents per day, this translates directly to infrastructure cost. Combined with the small quality gap ($<$2\% on slides), the latency penalty makes semantic chunking a poor default choice for throughput-sensitive applications. PAC, which also preserves middle-section information but runs 70$\times$ faster than semantic chunking, is a better complexity/quality trade-off when sophisticated chunking is needed.
+
+\subsection{Statistics Retention: A Universal Weakness}
+
+All methods score poorly on statistics retention (mean $\approx$ 2.6/5), and this is consistent across all three judges and all three generators. This suggests the limitation is on the \textit{generation} side rather than the chunking side: LLMs systematically prefer summarizing trends to citing specific numbers, regardless of whether the input chunk contains them. Improving statistics retention likely requires prompt engineering or post-processing rather than better chunking---a key direction for future work.
+
+\section{Discussion}
+
+\subsection{Task-Dependent Chunking}
+
+The most important finding of this study is that \textbf{chunking method matters dramatically more for some tasks than others}. For slide generation, the gap between best and worst method is 0.07 points (1.7\%); for Q\&A, it is 18 percentage points. This observation has direct implications for practitioners: investing in sophisticated chunking pipelines is justified only when downstream tasks require fine-grained factual recall (Q\&A, fact extraction). For broader summarization-style tasks like slide generation, simple truncation provides comparable quality at a fraction of the engineering cost.
+
+\subsection{Why Does Truncation Win? Three Hypotheses}
+\label{sec:why-truncation}
+
+Truncation's competitive performance raises a deeper question: \textit{why} does the simplest possible method match or beat more sophisticated approaches? Three candidate explanations deserve consideration: (i) research papers are inherently front-loaded with salient information, (ii) slide generation is a high-level summarization task that does not require deep content, or (iii) the evaluation method is insensitive to deeper content differences. The expanded experiments in this study allow us to address each hypothesis empirically.
+
+\textbf{Hypothesis 1: Front-loading.} Research papers are written with abstracts and introductions explicitly designed to summarize the entire work. If salient information is concentrated at the beginning, truncation will capture it almost by definition. Our Q\&A results provide direct evidence for this hypothesis: the absolute Q\&A accuracy drops sharply with document length (77.7\% on $<$5K-word documents, 50.9\% on 20K+ documents in Table~\ref{tab:qa_length}), but truncation remains the best method at \textit{every} length. This pattern is consistent with answerable facts being concentrated at document beginnings, since longer documents push more content past the 2{,}000-word boundary that truncation cannot reach. Furthermore, our expanded corpus includes 74 non-research documents (annual reports, government whitepapers, industry outlooks), which also place key findings in executive summaries---reinforcing that the front-loading effect is not unique to academic papers.
+
+\textbf{Hypothesis 2: Slide generation is a high-level summarization task.} Slides require broad coverage and high-level claims rather than fine-grained factual recall, so any chunking method that captures the document's main thesis is sufficient. Our Q\&A results provide a clean test: when the downstream task explicitly requires fine-grained factual recall, the chunking-method gap explodes from 1.7\% (slides) to 18 percentage points (Q\&A). This confirms that slide generation is forgiving of chunking-method differences \textit{because} it does not require fine-grained content. Hypothesis 2 is therefore correct, and is precisely the mechanism behind the ``small gains'' observation in the paper title.
+
+\textbf{Hypothesis 3: Evaluation insensitivity.} If the LLM-as-judge methodology is insensitive to deeper content differences, all methods would receive similar scores regardless of true quality. Three lines of evidence rule this out:
+\begin{enumerate}
+    \item \textbf{Cross-judge agreement:} Three independent judges (Gemini, GPT-4o-mini, Claude) produce the same ranking ($r = 0.53$--$0.61$). If judges were insensitive, agreement would be near zero.
+    \item \textbf{Human evaluation alignment:} A human annotator on 50 blind pairs reproduces the AI judges' ranking (PAC wins only 38\% overall). If LLM judges were missing real differences, humans would diverge.
+    \item \textbf{The Q\&A signal:} The same evaluation infrastructure produces an 18-percentage-point gap on Q\&A. If the methodology were intrinsically insensitive, no differences would emerge anywhere.
+\end{enumerate}
+We therefore conclude Hypotheses 1 and 2 are correct, while Hypothesis 3 is rejected by the data. Truncation wins because (a) documents are front-loaded and (b) slide generation does not stress fine-grained content recall---not because evaluation cannot detect differences.
+
+\subsection{Why Does PAC Underperform? Fundamental or Formulation?}
+\label{sec:why-pac}
+
+A natural follow-up question is whether PAC's average underperformance suggests positional heuristics are fundamentally weak, or only that the current formulation is too simplistic. The empirical results support a nuanced answer.
+
+\textbf{Positional heuristics are not fundamentally weak.} Two pieces of evidence push against the ``fundamentally weak'' interpretation:
+\begin{itemize}
+    \item PAC \textit{wins} for medium-length documents (5--10K words), achieving the highest score of any method on slide generation in this range (Table~\ref{tab:slides_length}). If positional heuristics were fundamentally broken, PAC would not have an empirical sweet spot.
+    \item The W-curve sensitivity analysis (Table~\ref{tab:sensitivity}) shows that PAC's chunk selection is robust to parameter perturbations: alternative configurations (\texttt{intro\_high}, \texttt{floor\_zero}, \texttt{u\_curve}, etc.) produce similar selections, indicating that the qualitative \textit{shape} of the position prior matters more than the specific values. This robustness to parameter choice is the hallmark of a meaningful---rather than overfit---heuristic.
+\end{itemize}
+
+\textbf{The current formulation is overly simplistic in three identifiable ways.} However, PAC's average underperformance against truncation indicates that the current formulation has clear limits:
+\begin{enumerate}
+    \item \textbf{Document-structure assumption.} The W-curve assumes a canonical \texttt{intro--results--conclusion} structure that holds for many but not all documents. Annual reports, technical manuals, and government whitepapers have non-canonical structures (e.g., financial highlights up front, methodology in appendices). A genre-aware position prior would likely outperform a single fixed curve.
+    \item \textbf{Discontinuity penalty.} PAC selects the highest-scoring windows independently and stitches them together. The downstream LLM must then integrate discontinuous fragments, which incurs a coherence cost not captured by the scoring function. A coherence-aware selection objective (e.g., favoring contiguous chunk runs when scores are tied) would mitigate this.
+    \item \textbf{Static budget allocation.} PAC allocates the same budget to every position region. An adaptive variant could allocate more budget to high-density regions and less to thin ones, depending on per-document signals.
+\end{enumerate}
+
+We therefore conclude: positional chunking is a meaningful idea with a real empirical niche, but the current PAC formulation is too generic to dominate truncation as a default. Future work should investigate document-genre detection, coherence-aware selection, and adaptive budget allocation.
+
+\subsection{Why Cross-Judge Agreement Matters}
+
+The Pearson correlations between Gemini, GPT-4o-mini, and Claude judges ($r = 0.53$--$0.61$) are moderate-to-high. Crucially, all three judges produce identical method rankings, and human raters agree. This tri-modal validation (3 generators $\times$ 3 judges $\times$ human) is substantially more rigorous than single-judge LLM evaluation studies and addresses head-on the concern that LLM-as-judge results might reflect the idiosyncratic preferences of one model.
+
+\subsection{Practical Implications: The Speed--Quality Trade-off}
+\label{sec:speed-discussion}
+
+Combining the quality results with the latency measurements in Section~\ref{sec:latency} produces a clear practical recommendation. Semantic chunking is approximately \textbf{3{,}300$\times$ slower} than truncation while delivering at most a 0.04-point improvement in slide quality (1\% relative). For typical production pipelines that process thousands of documents per day, this trade-off is unfavorable: the engineering and infrastructure cost of semantic chunking (embedding-model dependency, GPU/CPU compute, cache invalidation, version pinning) is hard to justify when truncation matches or exceeds it on the dominant metric.
+
+PAC offers a more attractive trade-off: 70$\times$ faster than semantic chunking with comparable or better quality on slide generation, and an empirical advantage on medium-length documents. We therefore recommend PAC over semantic chunking when sophisticated chunking is needed, and truncation as the default for everything else. This is consistent with the practitioner guidance in Section~\ref{sec:guide} below.
+
+\subsection{When to Use What: A Practitioner Guide}
+\label{sec:guide}
+
+Combining the slide-length stratification (Table~\ref{tab:slides_length}), the Q\&A length stratification (Table~\ref{tab:qa_length}), and the latency results (Table~\ref{tab:latency}), we recommend:
+\begin{itemize}
+    \item \textbf{Short documents ($<$5K words), any task:} Use \textbf{truncation}. The 2{,}000-word budget already captures most of the content; sophisticated methods are wasted complexity.
+    \item \textbf{Medium documents (5--10K words), summarization-style tasks (slides, briefings, summaries):} \textbf{Use PAC.} It outperforms all alternatives on slide quality in this range and runs 70$\times$ faster than semantic chunking.
+    \item \textbf{Long documents ($\geq$10K words), summarization-style tasks:} Use \textbf{truncation} or, if budget allows, PAC. Semantic chunking offers no quality advantage despite a 3{,}300$\times$ latency penalty.
+    \item \textbf{Any length, factual Q\&A or fact-extraction tasks:} Use \textbf{truncation}. Document beginnings (abstract, executive summary, introduction) capture the majority of answerable facts.
+    \item \textbf{High-throughput pipelines:} Default to truncation; only use PAC or semantic when downstream quality measurements justify the additional compute.
+\end{itemize}
+This task-aware guidance is the practical contribution of the study, replacing prior monolithic ``always use semantic'' or ``always use PAC'' recommendations.
+
+\subsection{Limitations and Scope}
+
+The conclusions of this study should be interpreted with the following limitations and scope in mind:
+
+\begin{itemize}
+    \item \textbf{Task coverage.} The study evaluates two downstream tasks (slide generation and factual Q\&A). Other generation tasks---most notably retrieval-augmented generation (RAG) over multi-document collections, code generation, and dialogue---may exhibit different sensitivities to chunking strategy. RAG in particular is qualitatively different from this setting because chunks are selected per-query at inference time rather than per-document offline. Generalization to RAG is left to future work.
+    \item \textbf{Prompt structure.} All generation calls used the same prompt template, with temperature 0, across methods and models. This isolates the chunking variable cleanly but leaves prompt-structure sensitivity unexplored. Different prompts (e.g., chain-of-thought, structured-output, role-conditioning) might amplify or shrink chunking-method differences. We hold prompts constant by design, but acknowledge that prompt-aware chunking is a complementary research direction.
+    \item \textbf{Domain coverage.} Although the corpus includes 20+ domains, certain specialized genres (legal contracts, fiction, code documentation, technical specifications, multilingual content) are underrepresented or absent.
+    \item \textbf{Question generation source.} Q\&A questions were generated by a single LLM (Gemini 2.0 Flash) from full PDFs. Different question generators might surface different facts. We mitigate this by generating questions \textit{before} chunking, so question generation cannot favor any chunking method, but the question distribution is fixed across methods.
+    \item \textbf{Single human rater.} Human evaluation was performed by one expert annotator on 50 pairs. Multi-rater studies with Cohen's $\kappa$ or Fleiss' $\kappa$ would further strengthen inter-rater reliability claims. We note that the human-AI agreement on rankings is the primary validation point; multi-rater extension is straightforward but resource-bounded.
+    \item \textbf{Language.} All documents were in English. Chunking methods that rely on linguistic structure (e.g., section heading detection in PAC) may behave differently in other languages.
+    \item \textbf{Static budgets.} The 2{,}000-word default and 1{,}000--5{,}000-word ablation range cover typical production practice but not extreme long-context settings (50K+ words), where the lost-in-the-middle effect may resurface and PAC's relative position may improve.
+    \item \textbf{Fixed evaluation rubric.} The six-dimension rubric (completeness, accuracy, statistics, coherence, relevance, balance) reflects standard slide-quality criteria but is not exhaustive. Alternative rubrics emphasizing visual layout, narrative arc, or audience adaptation might surface different rankings.
+\end{itemize}
+
+These limitations frame the findings as task- and dataset-specific rather than universal claims. The practitioner guide in Section~\ref{sec:guide} should be read with this scope in mind.
+
+\section{Conclusion}
+
+This study compared four document chunking strategies for LLM-based content generation across 218 diverse documents, three generation models, three LLM judges, two downstream tasks, and human evaluation. The principal findings:
+
+\begin{enumerate}
+    \item \textbf{Task dependence is the dominant factor.} Chunking has small effects on slide generation ($<$2\% spread) but large effects on Q\&A (18 pp spread).
+    \item \textbf{Position-aware chunking has a clear niche.} It outperforms all alternatives for medium-length documents (5--10K words) on slide generation.
+    \item \textbf{Truncation is the strongest baseline.} It dominates Q\&A across all lengths and is competitive on slides for long documents.
+    \item \textbf{Findings generalize across models and judges.} Three independent generators and three independent judges agree on method rankings; human evaluation confirms.
+    \item \textbf{Statistics retention is a universal generation-side weakness.} Chunking cannot fix it.
+    \item \textbf{Method rankings are stable} across chunk budgets and W-curve parameter perturbations.
+\end{enumerate}
+
+Beyond quality, the latency results provide a strong practical signal: semantic chunking is approximately 3{,}300$\times$ slower than truncation while delivering at most a 1\% quality improvement, making it a poor default for throughput-sensitive systems. Position-aware chunking is 70$\times$ faster than semantic chunking and preserves middle-section information, making it a more attractive choice when sophisticated chunking is needed.
+
+For practitioners, the recommendation is task-aware: use PAC for medium-length documents on slide-style tasks, and truncation for Q\&A or short-/long-document slide generation. The complexity overhead of sophisticated chunking is justified only in specific conditions, not as a universal default. Future work should investigate (i) RAG-style multi-document chunking where chunks are selected per query, (ii) prompt-aware chunking that co-optimizes chunk selection with prompt structure, (iii) document-genre detection to enable adaptive position priors, (iv) coherence-aware selection to mitigate the discontinuity penalty in PAC, (v) multi-rater human evaluation with formal inter-rater agreement, and (vi) prompt-side techniques to address the statistics-retention bottleneck.
+
+\section*{Conflict of Interest}
+
+The author declares that there is no conflict of interest regarding the publication of this paper.
+
+\section*{Data Availability}
+
+The evaluation code, results, and corpus metadata are available at: \url{https://github.com/gauravsingla05/chunking-benchmark}
+
+\IEEEtriggeratref{20}
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{gourav_singla.png}}]{Gourav Singla}
+received the M.S. degree in Computer Science from Texas Tech University, Lubbock, TX, USA, in 2023. He is currently an Independent Researcher. His research interests include large language models, natural language processing, and AI-powered content generation systems.
+\end{IEEEbiography}
+
+\end{document}

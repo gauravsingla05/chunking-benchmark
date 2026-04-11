@@ -1,0 +1,34 @@
+Dear Editor-in-Chief,
+
+I am pleased to submit the manuscript titled "Position-Aware vs Semantic Chunking for Content Generation: Small Gains, Big Trade-offs" for consideration as an Original Research Article in IEEE Access.
+
+This study addresses a practical gap in Large Language Model (LLM) literature: while document chunking is a ubiquitous preprocessing step in RAG and content generation, there is limited empirical guidance on which strategies actually improve downstream quality. This work provides this guidance through a controlled evaluation of four chunking methods across 101 research papers.
+
+Key Contributions:
+
+Empirical Benchmarking: I demonstrate that simple truncation outperforms or matches sophisticated chunking methods (semantic breakpoint, position-aware) for document-to-slide generation tasks.
+
+Statistical Rigor: I provide statistical evidence (paired t-tests, effect sizes) quantifying the marginal differences between approaches.
+
+Universal Limitations: I identify statistics retention as a universal limitation across all methods, suggesting this is a generation-side rather than chunking-side challenge.
+
+The findings have immediate practical implications: practitioners can confidently utilize simple truncation instead of complex chunking pipelines, reducing system complexity without sacrificing quality.
+
+Declarations:
+
+This manuscript is original, has not been published elsewhere, and is not under consideration by another journal.
+
+A version of this work has been posted as a preprint on TechRxiv.
+
+I confirm that there are no competing interests to disclose.
+
+All data and evaluation code will be made publicly available via GitHub upon acceptance.
+
+Thank you for your time and for considering this submission.
+
+Sincerely,
+
+Gourav Singla
+Independent Researcher
+ORCID: 0009-0007-8844-8019
+gouravsingla05@gmail.com

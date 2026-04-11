@@ -1,0 +1,737 @@
+{
+  "ratings": [
+    {
+      "pair_id": 1,
+      "doc_id": "The-Impact-of-Natural-Disasters-on-Food-Security-in-Turkiye",
+      "preferences": {
+        "completeness": "truncation",
+        "accuracy": "truncation",
+        "statistics": "truncation",
+        "coherence": "truncation",
+        "relevance": "truncation",
+        "overall": "truncation"
+      },
+      "confidence": 5,
+      "notes": "Deck A retained methods and numerical results"
+    },
+    {
+      "pair_id": 2,
+      "doc_id": "Cost-Optimization-in-Azure-and-AWS-Cloud",
+      "preferences": {
+        "completeness": "semantic_breakpoint",
+        "accuracy": "semantic_breakpoint",
+        "statistics": "semantic_breakpoint",
+        "coherence": "semantic_breakpoint",
+        "relevance": "semantic_breakpoint",
+        "overall": "semantic_breakpoint"
+      },
+      "confidence": 4,
+      "notes": "Deck A was broader and included a case study"
+    },
+    {
+      "pair_id": 3,
+      "doc_id": "AlixPartners-Media-Entertainment-2026",
+      "preferences": {
+        "completeness": "pac_position_aware",
+        "accuracy": "pac_position_aware",
+        "statistics": "pac_position_aware",
+        "coherence": "pac_position_aware",
+        "relevance": "pac_position_aware",
+        "overall": "pac_position_aware"
+      },
+      "confidence": 3,
+      "notes": "Deck B felt more source-specific and balanced"
+    },
+    {
+      "pair_id": 4,
+      "doc_id": "WIPO-Preservation-Toolkit",
+      "preferences": {
+        "completeness": "semantic_breakpoint",
+        "accuracy": "semantic_breakpoint",
+        "statistics": "semantic_breakpoint",
+        "coherence": "semantic_breakpoint",
+        "relevance": "semantic_breakpoint",
+        "overall": "semantic_breakpoint"
+      },
+      "confidence": 4,
+      "notes": "Deck A covered more of the toolkit scope"
+    },
+    {
+      "pair_id": 5,
+      "doc_id": "Gen-Z-Employee-Burnout",
+      "preferences": {
+        "completeness": "truncation",
+        "accuracy": "truncation",
+        "statistics": "pac_position_aware",
+        "coherence": "truncation",
+        "relevance": "truncation",
+        "overall": "truncation"
+      },
+      "confidence": 3,
+      "notes": "Deck B had stats but Deck A covered more dimensions"
+    },
+    {
+      "pair_id": 6,
+      "doc_id": "Fintech-Startup-Pitch-Tips",
+      "preferences": {
+        "completeness": "pac_position_aware",
+        "accuracy": "pac_position_aware",
+        "statistics": "pac_position_aware",
+        "coherence": "pac_position_aware",
+        "relevance": "semantic_breakpoint",
+        "overall": "pac_position_aware"
+      },
+      "confidence": 2,
+      "notes": "Very close pair with slight edge to Deck A"
+    },
+    {
+      "pair_id": 7,
+      "doc_id": "FAO-Crop-Food-Supply-Assessment-2024",
+      "preferences": {
+        "completeness": "pac_position_aware",
+        "accuracy": "pac_position_aware",
+        "statistics": "pac_position_aware",
+        "coherence": "pac_position_aware",
+        "relevance": "pac_position_aware",
+        "overall": "pac_position_aware"
+      },
+      "confidence": 5,
+      "notes": "Deck B better matched a national food supply assessment"
+    },
+    {
+      "pair_id": 8,
+      "doc_id": "DHS-Emergency-Disaster-Deployments",
+      "preferences": {
+        "completeness": "pac_position_aware",
+        "accuracy": "pac_position_aware",
+        "statistics": "pac_position_aware",
+        "coherence": "pac_position_aware",
+        "relevance": "pac_position_aware",
+        "overall": "pac_position_aware"
+      },
+      "confidence": 4,
+      "notes": "Deck B stayed closer to deployments and tracking"
+    },
+    {
+      "pair_id": 9,
+      "doc_id": "WHO-Western-Pacific-Whitepaper",
+      "preferences": {
+        "completeness": "truncation",
+        "accuracy": "truncation",
+        "statistics": "truncation",
+        "coherence": "truncation",
+        "relevance": "truncation",
+        "overall": "truncation"
+      },
+      "confidence": 2,
+      "notes": "Nearly tied but Deck A felt slightly fuller"
+    },
+    {
+      "pair_id": 10,
+      "doc_id": "Constraining primordial non-Gaussianity from DESI DR1 quasars and Planck PR4 CMB Lensing",
+      "preferences": {
+        "completeness": "semantic_breakpoint",
+        "accuracy": "semantic_breakpoint",
+        "statistics": "semantic_breakpoint",
+        "coherence": "semantic_breakpoint",
+        "relevance": "semantic_breakpoint",
+        "overall": "semantic_breakpoint"
+      },
+      "confidence": 5,
+      "notes": "Deck A was substantially more specific and complete"
+    },
+    {
+      "pair_id": 11,
+      "doc_id": "USDA-Food-Security-Assessment-2024",
+      "preferences": {
+        "completeness": "truncation",
+        "accuracy": "truncation",
+        "statistics": "truncation",
+        "coherence": "truncation",
+        "relevance": "truncation",
+        "overall": "truncation"
+      },
+      "confidence": 3,
+      "notes": "Deck A added more context without losing focus"
+    },
+    {
+      "pair_id": 12,
+      "doc_id": "pone.0276764",
+      "preferences": {
+        "completeness": "pac_position_aware",
+        "accuracy": "pac_position_aware",
+        "statistics": "pac_position_aware",
+        "coherence": "pac_position_aware",
+        "relevance": "pac_position_aware",
+        "overall": "pac_position_aware"
+      },
+      "confidence": 4,
+      "notes": "Deck B had stronger modeling detail and clearer findings"
+    },
+    {
+      "pair_id": 13,
+      "doc_id": "PwC-Entertainment-Media-Outlook-2024-28",
+      "preferences": {
+        "completeness": "pac_position_aware",
+        "accuracy": "pac_position_aware",
+        "statistics": "pac_position_aware",
+        "coherence": "pac_position_aware",
+        "relevance": "pac_position_aware",
+        "overall": "pac_position_aware"
+      },
+      "confidence": 5,
+      "notes": "Deck A was more Hong Kong specific and quantitative"
+    },
+    {
+      "pair_id": 14,
+      "doc_id": "Cloud-Security-Compliance-Framework",
+      "preferences": {
+        "completeness": "semantic_breakpoint",
+        "accuracy": "semantic_breakpoint",
+        "statistics": "semantic_breakpoint",
+        "coherence": "semantic_breakpoint",
+        "relevance": "semantic_breakpoint",
+        "overall": "semantic_breakpoint"
+      },
+      "confidence": 3,
+      "notes": "Deck B presented a clearer framework and benefits"
+    },
+    {
+      "pair_id": 15,
+      "doc_id": "Simulstream-Toolkit-for-Evaluation-and-Demonstration-of-Streaming-Speech-to-Text-Translation-Systems",
+      "preferences": {
+        "completeness": "truncation",
+        "accuracy": "truncation",
+        "statistics": "pac_position_aware",
+        "coherence": "truncation",
+        "relevance": "truncation",
+        "overall": "truncation"
+      },
+      "confidence": 5,
+      "notes": "Deck B captured the toolkit while Deck A mainly covered one experiment"
+    },
+    {
+      "pair_id": 16,
+      "doc_id": "Metropolitan-Museum-Exhibition-History",
+      "preferences": {
+        "completeness": "pac_position_aware",
+        "accuracy": "pac_position_aware",
+        "statistics": "pac_position_aware",
+        "coherence": "pac_position_aware",
+        "relevance": "pac_position_aware",
+        "overall": "pac_position_aware"
+      },
+      "confidence": 3,
+      "notes": "Deck A included a richer timeline of exhibitions"
+    },
+    {
+      "pair_id": 17,
+      "doc_id": "Analysis-of-Provincial-Export-Performance-in-Turkiye-A-Spectral-Clustering-Approach",
+      "preferences": {
+        "completeness": "truncation",
+        "accuracy": "truncation",
+        "statistics": "truncation",
+        "coherence": "truncation",
+        "relevance": "truncation",
+        "overall": "truncation"
+      },
+      "confidence": 5,
+      "notes": "Deck B was more focused on clustering results"
+    },
+    {
+      "pair_id": 18,
+      "doc_id": "Analysis of Research Trends in Computer Science- A Network Approach",
+      "preferences": {
+        "completeness": "pac_position_aware",
+        "accuracy": "pac_position_aware",
+        "statistics": "pac_position_aware",
+        "coherence": "pac_position_aware",
+        "relevance": "pac_position_aware",
+        "overall": "pac_position_aware"
+      },
+      "confidence": 3,
+      "notes": "Deck A provided stronger dataset and network specifics"
+    },
+    {
+      "pair_id": 19,
+      "doc_id": "Comparative-Analysis-of-Machine-Learning-Models-for-Predictive-Healthcare-in-Chronic-Disease-Management",
+      "preferences": {
+        "completeness": "truncation",
+        "accuracy": "truncation",
+        "statistics": "truncation",
+        "coherence": "truncation",
+        "relevance": "truncation",
+        "overall": "truncation"
+      },
+      "confidence": 5,
+      "notes": "Deck B better matched a model comparison paper"
+    },
+    {
+      "pair_id": 20,
+      "doc_id": "Exploring-the-Impacts-of-Economic-Growth-on-Ecosystem-and-Its-Subcomponents-in-Turkiye",
+      "preferences": {
+        "completeness": "semantic_breakpoint",
+        "accuracy": "semantic_breakpoint",
+        "statistics": "semantic_breakpoint",
+        "coherence": "semantic_breakpoint",
+        "relevance": "pac_position_aware",
+        "overall": "semantic_breakpoint"
+      },
+      "confidence": 4,
+      "notes": "Deck A preserved methodology and effect details better"
+    },
+    {
+      "pair_id": 21,
+      "doc_id": "FEMA-Disaster-Relief-Fund-Oct-2024",
+      "preferences": {
+        "completeness": "pac_position_aware",
+        "accuracy": "pac_position_aware",
+        "statistics": "pac_position_aware",
+        "coherence": "pac_position_aware",
+        "relevance": "pac_position_aware",
+        "overall": "pac_position_aware"
+      },
+      "confidence": 2,
+      "notes": "Almost identical pair with small edge to Deck A"
+    },
+    {
+      "pair_id": 22,
+      "doc_id": "PSONavigator_Data_Errors_in_Health_IT_Systems",
+      "preferences": {
+        "completeness": "pac_position_aware",
+        "accuracy": "pac_position_aware",
+        "statistics": "pac_position_aware",
+        "coherence": "pac_position_aware",
+        "relevance": "pac_position_aware",
+        "overall": "pac_position_aware"
+      },
+      "confidence": 5,
+      "notes": "Deck A was much closer to data integrity and patient safety"
+    },
+    {
+      "pair_id": 23,
+      "doc_id": "Stolz, Inequity in Education- Examining the Role of Funding on Student Achievement",
+      "preferences": {
+        "completeness": "pac_position_aware",
+        "accuracy": "truncation",
+        "statistics": "pac_position_aware",
+        "coherence": "truncation",
+        "relevance": "truncation",
+        "overall": "truncation"
+      },
+      "confidence": 3,
+      "notes": "Deck A had funding detail but Deck B connected funding to outcomes better"
+    },
+    {
+      "pair_id": 24,
+      "doc_id": "rishabhsinha",
+      "preferences": {
+        "completeness": "pac_position_aware",
+        "accuracy": "pac_position_aware",
+        "statistics": "pac_position_aware",
+        "coherence": "pac_position_aware",
+        "relevance": "pac_position_aware",
+        "overall": "pac_position_aware"
+      },
+      "confidence": 5,
+      "notes": "Deck A retained clear algorithm results and metrics"
+    },
+    {
+      "pair_id": 25,
+      "doc_id": "Risk Management\u2014the Revealing Hand",
+      "preferences": {
+        "completeness": "truncation",
+        "accuracy": "truncation",
+        "statistics": "truncation",
+        "coherence": "truncation",
+        "relevance": "truncation",
+        "overall": "truncation"
+      },
+      "confidence": 3,
+      "notes": "Deck A offered more concrete case material"
+    },
+    {
+      "pair_id": 26,
+      "doc_id": "Effects-of-the-Minimum-Wage-on-Employment-Dynamics",
+      "preferences": {
+        "completeness": "semantic_breakpoint",
+        "accuracy": "semantic_breakpoint",
+        "statistics": "semantic_breakpoint",
+        "coherence": "semantic_breakpoint",
+        "relevance": "semantic_breakpoint",
+        "overall": "semantic_breakpoint"
+      },
+      "confidence": 5,
+      "notes": "Deck A preserved elasticity and robustness results"
+    },
+    {
+      "pair_id": 27,
+      "doc_id": "Veterinary-Science-Prospectus-2024",
+      "preferences": {
+        "completeness": "pac_position_aware",
+        "accuracy": "pac_position_aware",
+        "statistics": "pac_position_aware",
+        "coherence": "pac_position_aware",
+        "relevance": "pac_position_aware",
+        "overall": "pac_position_aware"
+      },
+      "confidence": 4,
+      "notes": "Deck B better covered admissions structure and curriculum"
+    },
+    {
+      "pair_id": 28,
+      "doc_id": "Towards Integrating Emerging AI Applications in SE Education",
+      "preferences": {
+        "completeness": "semantic_breakpoint",
+        "accuracy": "semantic_breakpoint",
+        "statistics": "semantic_breakpoint",
+        "coherence": "semantic_breakpoint",
+        "relevance": "semantic_breakpoint",
+        "overall": "semantic_breakpoint"
+      },
+      "confidence": 4,
+      "notes": "Deck B felt more concrete and research grounded"
+    },
+    {
+      "pair_id": 29,
+      "doc_id": "Universal Basic Income and the Alaska Permanent Fund_ Impact on L",
+      "preferences": {
+        "completeness": "pac_position_aware",
+        "accuracy": "pac_position_aware",
+        "statistics": "pac_position_aware",
+        "coherence": "pac_position_aware",
+        "relevance": "pac_position_aware",
+        "overall": "pac_position_aware"
+      },
+      "confidence": 5,
+      "notes": "Deck B preserved the empirical design and evidence"
+    },
+    {
+      "pair_id": 30,
+      "doc_id": "advanced-robotics-in-the-factory-of-the-future_tcm9-217112",
+      "preferences": {
+        "completeness": "semantic_breakpoint",
+        "accuracy": "semantic_breakpoint",
+        "statistics": "pac_position_aware",
+        "coherence": "semantic_breakpoint",
+        "relevance": "semantic_breakpoint",
+        "overall": "semantic_breakpoint"
+      },
+      "confidence": 3,
+      "notes": "Deck B was more coherent while Deck A had the clearer numbers"
+    },
+    {
+      "pair_id": 31,
+      "doc_id": "Meer_West_MinimumWage",
+      "preferences": {
+        "completeness": "truncation",
+        "accuracy": "truncation",
+        "statistics": "truncation",
+        "coherence": "truncation",
+        "relevance": "truncation",
+        "overall": "truncation"
+      },
+      "confidence": 5,
+      "notes": "Deck B better reflected dynamic employment growth arguments"
+    },
+    {
+      "pair_id": 32,
+      "doc_id": "FAO-Background-Guide",
+      "preferences": {
+        "completeness": "semantic_breakpoint",
+        "accuracy": "semantic_breakpoint",
+        "statistics": "semantic_breakpoint",
+        "coherence": "semantic_breakpoint",
+        "relevance": "semantic_breakpoint",
+        "overall": "semantic_breakpoint"
+      },
+      "confidence": 4,
+      "notes": "Deck A covered FAO mission and fisheries governance more completely"
+    },
+    {
+      "pair_id": 33,
+      "doc_id": "NBER-Corporate-Social-Impact",
+      "preferences": {
+        "completeness": "pac_position_aware",
+        "accuracy": "pac_position_aware",
+        "statistics": "pac_position_aware",
+        "coherence": "pac_position_aware",
+        "relevance": "pac_position_aware",
+        "overall": "pac_position_aware"
+      },
+      "confidence": 4,
+      "notes": "Deck B was more quantitative and looked closer to the specific paper"
+    },
+    {
+      "pair_id": 34,
+      "doc_id": "ShareChat-A-Dataset-of-Chatbot-Conversations-in-the-Wild",
+      "preferences": {
+        "completeness": "semantic_breakpoint",
+        "accuracy": "semantic_breakpoint",
+        "statistics": "semantic_breakpoint",
+        "coherence": "semantic_breakpoint",
+        "relevance": "semantic_breakpoint",
+        "overall": "semantic_breakpoint"
+      },
+      "confidence": 5,
+      "notes": "Deck A captured the dataset scope and platform analysis clearly"
+    },
+    {
+      "pair_id": 35,
+      "doc_id": "Generative AI in Medicine",
+      "preferences": {
+        "completeness": "truncation",
+        "accuracy": "truncation",
+        "statistics": "truncation",
+        "coherence": "truncation",
+        "relevance": "truncation",
+        "overall": "truncation"
+      },
+      "confidence": 3,
+      "notes": "Very close pair with slight edge to Deck A for breadth"
+    },
+    {
+      "pair_id": 36,
+      "doc_id": "A Review Examining Biases in Workplace Hiring and Promotion Proce",
+      "preferences": {
+        "completeness": "semantic_breakpoint",
+        "accuracy": "semantic_breakpoint",
+        "statistics": "semantic_breakpoint",
+        "coherence": "semantic_breakpoint",
+        "relevance": "semantic_breakpoint",
+        "overall": "semantic_breakpoint"
+      },
+      "confidence": 5,
+      "notes": "Deck A covered both hiring and promotion biases rather than only leadership outcomes"
+    },
+    {
+      "pair_id": 37,
+      "doc_id": "Deloitte-Travel-Hospitality-2024",
+      "preferences": {
+        "completeness": "truncation",
+        "accuracy": "truncation",
+        "statistics": "truncation",
+        "coherence": "truncation",
+        "relevance": "truncation",
+        "overall": "truncation"
+      },
+      "confidence": 3,
+      "notes": "Deck A gave a broader travel outlook with stronger supporting figures"
+    },
+    {
+      "pair_id": 38,
+      "doc_id": "Umbrella Review BI_final",
+      "preferences": {
+        "completeness": "semantic_breakpoint",
+        "accuracy": "semantic_breakpoint",
+        "statistics": "semantic_breakpoint",
+        "coherence": "semantic_breakpoint",
+        "relevance": "semantic_breakpoint",
+        "overall": "semantic_breakpoint"
+      },
+      "confidence": 4,
+      "notes": "Deck B included more substantive outcomes beyond a generic UBI overview"
+    },
+    {
+      "pair_id": 39,
+      "doc_id": "XBIDetective-Leveraging-Vision-Language-Models-for-Identifying-Cross-Browser-Visual-Inconsistencies",
+      "preferences": {
+        "completeness": "pac_position_aware",
+        "accuracy": "pac_position_aware",
+        "statistics": "pac_position_aware",
+        "coherence": "pac_position_aware",
+        "relevance": "pac_position_aware",
+        "overall": "pac_position_aware"
+      },
+      "confidence": 5,
+      "notes": "Deck A preserved dataset size model comparison and error analysis"
+    },
+    {
+      "pair_id": 40,
+      "doc_id": "Input-output behaviour of a model neuron with alternating drift",
+      "preferences": {
+        "completeness": "pac_position_aware",
+        "accuracy": "pac_position_aware",
+        "statistics": "pac_position_aware",
+        "coherence": "semantic_breakpoint",
+        "relevance": "pac_position_aware",
+        "overall": "pac_position_aware"
+      },
+      "confidence": 4,
+      "notes": "Deck A had richer technical detail while Deck B flowed slightly better"
+    },
+    {
+      "pair_id": 41,
+      "doc_id": "WMS-Market-Report-2024",
+      "preferences": {
+        "completeness": "truncation",
+        "accuracy": "truncation",
+        "statistics": "truncation",
+        "coherence": "truncation",
+        "relevance": "truncation",
+        "overall": "truncation"
+      },
+      "confidence": 2,
+      "notes": "Almost identical pair with a slight edge to Deck B for the added emerging tech point"
+    },
+    {
+      "pair_id": 42,
+      "doc_id": "Deloitte-Tech-Outlook-2024",
+      "preferences": {
+        "completeness": "semantic_breakpoint",
+        "accuracy": "semantic_breakpoint",
+        "statistics": "semantic_breakpoint",
+        "coherence": "semantic_breakpoint",
+        "relevance": "semantic_breakpoint",
+        "overall": "semantic_breakpoint"
+      },
+      "confidence": 5,
+      "notes": "Deck B matched a broad 2024 tech outlook better than a gen AI only deck"
+    },
+    {
+      "pair_id": 43,
+      "doc_id": "Workplace-Mental-Health-Playbook",
+      "preferences": {
+        "completeness": "pac_position_aware",
+        "accuracy": "pac_position_aware",
+        "statistics": "truncation",
+        "coherence": "pac_position_aware",
+        "relevance": "pac_position_aware",
+        "overall": "pac_position_aware"
+      },
+      "confidence": 4,
+      "notes": "Deck B felt more playbook oriented while Deck A had the stronger ROI statistic"
+    },
+    {
+      "pair_id": 44,
+      "doc_id": "Implementation-of-Augmented-Reality-as-an-Educational-Tool-for-Wudhu-Practice-in-Early-Childhood",
+      "preferences": {
+        "completeness": "pac_position_aware",
+        "accuracy": "pac_position_aware",
+        "statistics": "pac_position_aware",
+        "coherence": "pac_position_aware",
+        "relevance": "pac_position_aware",
+        "overall": "pac_position_aware"
+      },
+      "confidence": 5,
+      "notes": "Deck B better captured implementation details and system design"
+    },
+    {
+      "pair_id": 45,
+      "doc_id": "effectiveness_of_online_and_blended_learning",
+      "preferences": {
+        "completeness": "pac_position_aware",
+        "accuracy": "pac_position_aware",
+        "statistics": "pac_position_aware",
+        "coherence": "pac_position_aware",
+        "relevance": "pac_position_aware",
+        "overall": "pac_position_aware"
+      },
+      "confidence": 3,
+      "notes": "Deck A was slightly more complete and evidence driven"
+    },
+    {
+      "pair_id": 46,
+      "doc_id": "World-Bank-AI-Exposure-Workers",
+      "preferences": {
+        "completeness": "semantic_breakpoint",
+        "accuracy": "semantic_breakpoint",
+        "statistics": "semantic_breakpoint",
+        "coherence": "semantic_breakpoint",
+        "relevance": "semantic_breakpoint",
+        "overall": "semantic_breakpoint"
+      },
+      "confidence": 4,
+      "notes": "Deck A was more grounded in the study scope and policy implications"
+    },
+    {
+      "pair_id": 47,
+      "doc_id": "MBA-Operations-Management-Lectures",
+      "preferences": {
+        "completeness": "truncation",
+        "accuracy": "truncation",
+        "statistics": "truncation",
+        "coherence": "truncation",
+        "relevance": "truncation",
+        "overall": "truncation"
+      },
+      "confidence": 5,
+      "notes": "Deck B fit a general operations management lecture set better"
+    },
+    {
+      "pair_id": 48,
+      "doc_id": "Compass-Group-Annual-Report-2024",
+      "preferences": {
+        "completeness": "semantic_breakpoint",
+        "accuracy": "semantic_breakpoint",
+        "statistics": "semantic_breakpoint",
+        "coherence": "semantic_breakpoint",
+        "relevance": "semantic_breakpoint",
+        "overall": "semantic_breakpoint"
+      },
+      "confidence": 5,
+      "notes": "Deck A represented the annual report broadly while Deck B focused on one theme"
+    },
+    {
+      "pair_id": 49,
+      "doc_id": "KPMG-Smart-to-Smarter-Cities",
+      "preferences": {
+        "completeness": "truncation",
+        "accuracy": "truncation",
+        "statistics": "truncation",
+        "coherence": "truncation",
+        "relevance": "truncation",
+        "overall": "truncation"
+      },
+      "confidence": 3,
+      "notes": "Deck B was slightly more coherent and tightly aligned to the smart to smarter framing"
+    },
+    {
+      "pair_id": 50,
+      "doc_id": "Intro-Deep-RL",
+      "preferences": {
+        "completeness": "semantic_breakpoint",
+        "accuracy": "semantic_breakpoint",
+        "statistics": "pac_position_aware",
+        "coherence": "semantic_breakpoint",
+        "relevance": "semantic_breakpoint",
+        "overall": "semantic_breakpoint"
+      },
+      "confidence": 4,
+      "notes": "Deck B gave a stronger introduction while Deck A had the more technical detail"
+    }
+  ],
+  "win_rates": {
+    "completeness": {
+      "truncation": 0.28,
+      "semantic_breakpoint": 0.32,
+      "pac_position_aware": 0.4
+    },
+    "accuracy": {
+      "truncation": 0.3,
+      "semantic_breakpoint": 0.32,
+      "pac_position_aware": 0.38
+    },
+    "statistics": {
+      "truncation": 0.26,
+      "semantic_breakpoint": 0.28,
+      "pac_position_aware": 0.46
+    },
+    "coherence": {
+      "truncation": 0.3,
+      "semantic_breakpoint": 0.34,
+      "pac_position_aware": 0.36
+    },
+    "relevance": {
+      "truncation": 0.3,
+      "semantic_breakpoint": 0.32,
+      "pac_position_aware": 0.38
+    },
+    "overall": {
+      "truncation": 0.3,
+      "semantic_breakpoint": 0.32,
+      "pac_position_aware": 0.38
+    }
+  },
+  "total_pairs": 50
+}

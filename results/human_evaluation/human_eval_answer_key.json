@@ -1,0 +1,302 @@
+[
+  {
+    "pair_id": 1,
+    "doc_id": "The-Impact-of-Natural-Disasters-on-Food-Security-in-Turkiye",
+    "deck_a_method": "truncation",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 2,
+    "doc_id": "Cost-Optimization-in-Azure-and-AWS-Cloud",
+    "deck_a_method": "semantic_breakpoint",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 3,
+    "doc_id": "AlixPartners-Media-Entertainment-2026",
+    "deck_a_method": "truncation",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 4,
+    "doc_id": "WIPO-Preservation-Toolkit",
+    "deck_a_method": "semantic_breakpoint",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 5,
+    "doc_id": "Gen-Z-Employee-Burnout",
+    "deck_a_method": "truncation",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 6,
+    "doc_id": "Fintech-Startup-Pitch-Tips",
+    "deck_a_method": "pac_position_aware",
+    "deck_b_method": "semantic_breakpoint"
+  },
+  {
+    "pair_id": 7,
+    "doc_id": "FAO-Crop-Food-Supply-Assessment-2024",
+    "deck_a_method": "truncation",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 8,
+    "doc_id": "DHS-Emergency-Disaster-Deployments",
+    "deck_a_method": "semantic_breakpoint",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 9,
+    "doc_id": "WHO-Western-Pacific-Whitepaper",
+    "deck_a_method": "truncation",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 10,
+    "doc_id": "Constraining primordial non-Gaussianity from DESI DR1 quasars and Planck PR4 CMB Lensing",
+    "deck_a_method": "semantic_breakpoint",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 11,
+    "doc_id": "USDA-Food-Security-Assessment-2024",
+    "deck_a_method": "truncation",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 12,
+    "doc_id": "pone.0276764",
+    "deck_a_method": "semantic_breakpoint",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 13,
+    "doc_id": "PwC-Entertainment-Media-Outlook-2024-28",
+    "deck_a_method": "pac_position_aware",
+    "deck_b_method": "truncation"
+  },
+  {
+    "pair_id": 14,
+    "doc_id": "Cloud-Security-Compliance-Framework",
+    "deck_a_method": "pac_position_aware",
+    "deck_b_method": "semantic_breakpoint"
+  },
+  {
+    "pair_id": 15,
+    "doc_id": "Simulstream-Toolkit-for-Evaluation-and-Demonstration-of-Streaming-Speech-to-Text-Translation-Systems",
+    "deck_a_method": "pac_position_aware",
+    "deck_b_method": "truncation"
+  },
+  {
+    "pair_id": 16,
+    "doc_id": "Metropolitan-Museum-Exhibition-History",
+    "deck_a_method": "pac_position_aware",
+    "deck_b_method": "semantic_breakpoint"
+  },
+  {
+    "pair_id": 17,
+    "doc_id": "Analysis-of-Provincial-Export-Performance-in-Turkiye-A-Spectral-Clustering-Approach",
+    "deck_a_method": "pac_position_aware",
+    "deck_b_method": "truncation"
+  },
+  {
+    "pair_id": 18,
+    "doc_id": "Analysis of Research Trends in Computer Science- A Network Approach",
+    "deck_a_method": "pac_position_aware",
+    "deck_b_method": "semantic_breakpoint"
+  },
+  {
+    "pair_id": 19,
+    "doc_id": "Comparative-Analysis-of-Machine-Learning-Models-for-Predictive-Healthcare-in-Chronic-Disease-Management",
+    "deck_a_method": "pac_position_aware",
+    "deck_b_method": "truncation"
+  },
+  {
+    "pair_id": 20,
+    "doc_id": "Exploring-the-Impacts-of-Economic-Growth-on-Ecosystem-and-Its-Subcomponents-in-Turkiye",
+    "deck_a_method": "semantic_breakpoint",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 21,
+    "doc_id": "FEMA-Disaster-Relief-Fund-Oct-2024",
+    "deck_a_method": "pac_position_aware",
+    "deck_b_method": "truncation"
+  },
+  {
+    "pair_id": 22,
+    "doc_id": "PSONavigator_Data_Errors_in_Health_IT_Systems",
+    "deck_a_method": "pac_position_aware",
+    "deck_b_method": "semantic_breakpoint"
+  },
+  {
+    "pair_id": 23,
+    "doc_id": "Stolz, Inequity in Education- Examining the Role of Funding on Student Achievement",
+    "deck_a_method": "pac_position_aware",
+    "deck_b_method": "truncation"
+  },
+  {
+    "pair_id": 24,
+    "doc_id": "rishabhsinha",
+    "deck_a_method": "pac_position_aware",
+    "deck_b_method": "semantic_breakpoint"
+  },
+  {
+    "pair_id": 25,
+    "doc_id": "Risk Management\u2014the Revealing Hand",
+    "deck_a_method": "truncation",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 26,
+    "doc_id": "Effects-of-the-Minimum-Wage-on-Employment-Dynamics",
+    "deck_a_method": "semantic_breakpoint",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 27,
+    "doc_id": "Veterinary-Science-Prospectus-2024",
+    "deck_a_method": "truncation",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 28,
+    "doc_id": "Towards Integrating Emerging AI Applications in SE Education",
+    "deck_a_method": "pac_position_aware",
+    "deck_b_method": "semantic_breakpoint"
+  },
+  {
+    "pair_id": 29,
+    "doc_id": "Universal Basic Income and the Alaska Permanent Fund_ Impact on L",
+    "deck_a_method": "truncation",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 30,
+    "doc_id": "advanced-robotics-in-the-factory-of-the-future_tcm9-217112",
+    "deck_a_method": "pac_position_aware",
+    "deck_b_method": "semantic_breakpoint"
+  },
+  {
+    "pair_id": 31,
+    "doc_id": "Meer_West_MinimumWage",
+    "deck_a_method": "pac_position_aware",
+    "deck_b_method": "truncation"
+  },
+  {
+    "pair_id": 32,
+    "doc_id": "FAO-Background-Guide",
+    "deck_a_method": "semantic_breakpoint",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 33,
+    "doc_id": "NBER-Corporate-Social-Impact",
+    "deck_a_method": "truncation",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 34,
+    "doc_id": "ShareChat-A-Dataset-of-Chatbot-Conversations-in-the-Wild",
+    "deck_a_method": "semantic_breakpoint",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 35,
+    "doc_id": "Generative AI in Medicine",
+    "deck_a_method": "truncation",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 36,
+    "doc_id": "A Review Examining Biases in Workplace Hiring and Promotion Proce",
+    "deck_a_method": "semantic_breakpoint",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 37,
+    "doc_id": "Deloitte-Travel-Hospitality-2024",
+    "deck_a_method": "truncation",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 38,
+    "doc_id": "Umbrella Review BI_final",
+    "deck_a_method": "pac_position_aware",
+    "deck_b_method": "semantic_breakpoint"
+  },
+  {
+    "pair_id": 39,
+    "doc_id": "XBIDetective-Leveraging-Vision-Language-Models-for-Identifying-Cross-Browser-Visual-Inconsistencies",
+    "deck_a_method": "pac_position_aware",
+    "deck_b_method": "truncation"
+  },
+  {
+    "pair_id": 40,
+    "doc_id": "Input-output behaviour of a model neuron with alternating drift",
+    "deck_a_method": "pac_position_aware",
+    "deck_b_method": "semantic_breakpoint"
+  },
+  {
+    "pair_id": 41,
+    "doc_id": "WMS-Market-Report-2024",
+    "deck_a_method": "pac_position_aware",
+    "deck_b_method": "truncation"
+  },
+  {
+    "pair_id": 42,
+    "doc_id": "Deloitte-Tech-Outlook-2024",
+    "deck_a_method": "pac_position_aware",
+    "deck_b_method": "semantic_breakpoint"
+  },
+  {
+    "pair_id": 43,
+    "doc_id": "Workplace-Mental-Health-Playbook",
+    "deck_a_method": "truncation",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 44,
+    "doc_id": "Implementation-of-Augmented-Reality-as-an-Educational-Tool-for-Wudhu-Practice-in-Early-Childhood",
+    "deck_a_method": "semantic_breakpoint",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 45,
+    "doc_id": "effectiveness_of_online_and_blended_learning",
+    "deck_a_method": "pac_position_aware",
+    "deck_b_method": "truncation"
+  },
+  {
+    "pair_id": 46,
+    "doc_id": "World-Bank-AI-Exposure-Workers",
+    "deck_a_method": "semantic_breakpoint",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 47,
+    "doc_id": "MBA-Operations-Management-Lectures",
+    "deck_a_method": "pac_position_aware",
+    "deck_b_method": "truncation"
+  },
+  {
+    "pair_id": 48,
+    "doc_id": "Compass-Group-Annual-Report-2024",
+    "deck_a_method": "semantic_breakpoint",
+    "deck_b_method": "pac_position_aware"
+  },
+  {
+    "pair_id": 49,
+    "doc_id": "KPMG-Smart-to-Smarter-Cities",
+    "deck_a_method": "pac_position_aware",
+    "deck_b_method": "truncation"
+  },
+  {
+    "pair_id": 50,
+    "doc_id": "Intro-Deep-RL",
+    "deck_a_method": "pac_position_aware",
+    "deck_b_method": "semantic_breakpoint"
+  }
+]

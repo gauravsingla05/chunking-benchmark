@@ -1,0 +1,242 @@
+{
+  "descriptive_statistics": {
+    "truncation": {
+      "completeness": {
+        "n": 101,
+        "mean": 3.63,
+        "std": 0.48,
+        "se": 0.048,
+        "ci_95_lower": 3.54,
+        "ci_95_upper": 3.73
+      },
+      "accuracy": {
+        "n": 101,
+        "mean": 4.99,
+        "std": 0.1,
+        "se": 0.01,
+        "ci_95_lower": 4.97,
+        "ci_95_upper": 5.01
+      },
+      "statistics_retention": {
+        "n": 101,
+        "mean": 2.61,
+        "std": 1.24,
+        "se": 0.123,
+        "ci_95_lower": 2.37,
+        "ci_95_upper": 2.86
+      },
+      "coherence": {
+        "n": 101,
+        "mean": 4.28,
+        "std": 0.53,
+        "se": 0.053,
+        "ci_95_lower": 4.17,
+        "ci_95_upper": 4.38
+      },
+      "relevance": {
+        "n": 101,
+        "mean": 5,
+        "std": 0.0,
+        "se": 0.0,
+        "ci_95_lower": 5.0,
+        "ci_95_upper": 5.0
+      },
+      "coverage_balance": {
+        "n": 101,
+        "mean": 3.51,
+        "std": 0.52,
+        "se": 0.052,
+        "ci_95_lower": 3.41,
+        "ci_95_upper": 3.62
+      },
+      "overall_score": {
+        "n": 101,
+        "mean": 4.01,
+        "std": 0.38,
+        "se": 0.038,
+        "ci_95_lower": 3.93,
+        "ci_95_upper": 4.08
+      }
+    },
+    "fixed_size_first_last": {
+      "completeness": {
+        "n": 101,
+        "mean": 3.51,
+        "std": 0.5,
+        "se": 0.05,
+        "ci_95_lower": 3.42,
+        "ci_95_upper": 3.61
+      },
+      "accuracy": {
+        "n": 101,
+        "mean": 4.96,
+        "std": 0.2,
+        "se": 0.02,
+        "ci_95_lower": 4.92,
+        "ci_95_upper": 5.0
+      },
+      "statistics_retention": {
+        "n": 101,
+        "mean": 2.55,
+        "std": 1.23,
+        "se": 0.122,
+        "ci_95_lower": 2.31,
+        "ci_95_upper": 2.79
+      },
+      "coherence": {
+        "n": 101,
+        "mean": 4.13,
+        "std": 0.58,
+        "se": 0.057,
+        "ci_95_lower": 4.02,
+        "ci_95_upper": 4.24
+      },
+      "relevance": {
+        "n": 101,
+        "mean": 4.99,
+        "std": 0.1,
+        "se": 0.01,
+        "ci_95_lower": 4.97,
+        "ci_95_upper": 5.01
+      },
+      "coverage_balance": {
+        "n": 101,
+        "mean": 3.38,
+        "std": 0.51,
+        "se": 0.05,
+        "ci_95_lower": 3.28,
+        "ci_95_upper": 3.48
+      },
+      "overall_score": {
+        "n": 101,
+        "mean": 3.91,
+        "std": 0.41,
+        "se": 0.041,
+        "ci_95_lower": 3.84,
+        "ci_95_upper": 3.99
+      }
+    },
+    "semantic_breakpoint": {
+      "completeness": {
+        "n": 101,
+        "mean": 3.54,
+        "std": 0.5,
+        "se": 0.05,
+        "ci_95_lower": 3.45,
+        "ci_95_upper": 3.64
+      },
+      "accuracy": {
+        "n": 101,
+        "mean": 4.96,
+        "std": 0.2,
+        "se": 0.02,
+        "ci_95_lower": 4.92,
+        "ci_95_upper": 5.0
+      },
+      "statistics_retention": {
+        "n": 101,
+        "mean": 2.64,
+        "std": 1.07,
+        "se": 0.107,
+        "ci_95_lower": 2.43,
+        "ci_95_upper": 2.85
+      },
+      "coherence": {
+        "n": 101,
+        "mean": 4.3,
+        "std": 0.5,
+        "se": 0.05,
+        "ci_95_lower": 4.2,
+        "ci_95_upper": 4.39
+      },
+      "relevance": {
+        "n": 101,
+        "mean": 5,
+        "std": 0.0,
+        "se": 0.0,
+        "ci_95_lower": 5.0,
+        "ci_95_upper": 5.0
+      },
+      "coverage_balance": {
+        "n": 101,
+        "mean": 3.45,
+        "std": 0.5,
+        "se": 0.05,
+        "ci_95_lower": 3.35,
+        "ci_95_upper": 3.54
+      },
+      "overall_score": {
+        "n": 101,
+        "mean": 3.98,
+        "std": 0.34,
+        "se": 0.034,
+        "ci_95_lower": 3.91,
+        "ci_95_upper": 4.05
+      }
+    },
+    "pac_position_aware": {
+      "completeness": {
+        "n": 101,
+        "mean": 3.46,
+        "std": 0.54,
+        "se": 0.054,
+        "ci_95_lower": 3.35,
+        "ci_95_upper": 3.56
+      },
+      "accuracy": {
+        "n": 101,
+        "mean": 4.91,
+        "std": 0.35,
+        "se": 0.035,
+        "ci_95_lower": 4.84,
+        "ci_95_upper": 4.98
+      },
+      "statistics_retention": {
+        "n": 101,
+        "mean": 2.84,
+        "std": 1.24,
+        "se": 0.123,
+        "ci_95_lower": 2.6,
+        "ci_95_upper": 3.08
+      },
+      "coherence": {
+        "n": 101,
+        "mean": 4.08,
+        "std": 0.58,
+        "se": 0.057,
+        "ci_95_lower": 3.97,
+        "ci_95_upper": 4.19
+      },
+      "relevance": {
+        "n": 101,
+        "mean": 4.85,
+        "std": 0.5,
+        "se": 0.05,
+        "ci_95_lower": 4.75,
+        "ci_95_upper": 4.95
+      },
+      "coverage_balance": {
+        "n": 101,
+        "mean": 3.33,
+        "std": 0.6,
+        "se": 0.06,
+        "ci_95_lower": 3.21,
+        "ci_95_upper": 3.44
+      },
+      "overall_score": {
+        "n": 101,
+        "mean": 3.91,
+        "std": 0.48,
+        "se": 0.048,
+        "ci_95_lower": 3.81,
+        "ci_95_upper": 4.0
+      }
+    }
+  },
+  "paired_t_tests": {
+    "truncation_vs_fixed_size_first_last": {
+      "completeness": {
+        "t_statistic": 2.316,
+        "p_value": 0.0226,
+        "cohens_d": 0.232,
+        "significant_05": 

@@ -1,0 +1,318 @@
+{
+  "by_method_model": {
+    "fixed_size_first_last": {
+      "gemini-2.0-flash": {
+        "correct": 955,
+        "partial": 86,
+        "incorrect": 234,
+        "unanswerable": 905,
+        "total": 2180
+      },
+      "claude-sonnet-4-20250514": {
+        "correct": 975,
+        "partial": 62,
+        "incorrect": 340,
+        "unanswerable": 793,
+        "total": 2170
+      }
+    },
+    "pac_position_aware": {
+      "gemini-2.0-flash": {
+        "correct": 899,
+        "partial": 70,
+        "incorrect": 258,
+        "unanswerable": 953,
+        "total": 2180
+      },
+      "claude-sonnet-4-20250514": {
+        "correct": 921,
+        "partial": 57,
+        "incorrect": 306,
+        "unanswerable": 886,
+        "total": 2170
+      }
+    },
+    "truncation": {
+      "claude-sonnet-4-20250514": {
+        "correct": 1309,
+        "partial": 60,
+        "incorrect": 176,
+        "unanswerable": 635,
+        "total": 2180
+      },
+      "gemini-2.0-flash": {
+        "correct": 1297,
+        "partial": 64,
+        "incorrect": 184,
+        "unanswerable": 635,
+        "total": 2180
+      }
+    },
+    "semantic_breakpoint": {
+      "claude-sonnet-4-20250514": {
+        "correct": 1076,
+        "partial": 70,
+        "incorrect": 225,
+        "unanswerable": 809,
+        "total": 2180
+      },
+      "gemini-2.0-flash": {
+        "correct": 1060,
+        "partial": 66,
+        "incorrect": 236,
+        "unanswerable": 808,
+        "total": 2170
+      }
+    }
+  },
+  "by_method_category": {
+    "fixed_size_first_last": {
+      "statistics": {
+        "correct": 530,
+        "total": 1388
+      },
+      "methodology": {
+        "correct": 394,
+        "total": 1014
+      },
+      "background": {
+        "correct": 532,
+        "total": 822
+      },
+      "findings": {
+        "correct": 279,
+        "total": 664
+      },
+      "conclusion": {
+        "correct": 189,
+        "total": 416
+      },
+      "challenges": {
+        "correct": 0,
+        "total": 12
+      },
+      "literature review": {
+        "correct": 2,
+        "total": 2
+      },
+      "defining burnout": {
+        "correct": 0,
+        "total": 2
+      },
+      "results": {
+        "correct": 0,
+        "total": 2
+      },
+      "recommendation": {
+        "correct": 0,
+        "total": 14
+      },
+      "definitions": {
+        "correct": 2,
+        "total": 6
+      },
+      "limitations": {
+        "correct": 0,
+        "total": 2
+      },
+      "legislative language": {
+        "correct": 2,
+        "total": 2
+      },
+      "data": {
+        "correct": 0,
+        "total": 2
+      },
+      "policy": {
+        "correct": 0,
+        "total": 2
+      }
+    },
+    "pac_position_aware": {
+      "background": {
+        "correct": 370,
+        "total": 820
+      },
+      "statistics": {
+        "correct": 562,
+        "total": 1390
+      },
+      "findings": {
+        "correct": 275,
+        "total": 665
+      },
+      "methodology": {
+        "correct": 415,
+        "total": 1014
+      },
+      "conclusion": {
+        "correct": 170,
+        "total": 415
+      },
+      "data": {
+        "correct": 0,
+        "total": 2
+      },
+      "definitions": {
+        "correct": 6,
+        "total": 6
+      },
+      "limitations": {
+        "correct": 0,
+        "total": 2
+      },
+      "policy": {
+        "correct": 1,
+        "total": 2
+      },
+      "results": {
+        "correct": 0,
+        "total": 2
+      },
+      "legislative language": {
+        "correct": 1,
+        "total": 2
+      },
+      "literature review": {
+        "correct": 0,
+        "total": 2
+      },
+      "recommendation": {
+        "correct": 12,
+        "total": 14
+      },
+      "challenges": {
+        "correct": 8,
+        "total": 12
+      },
+      "defining burnout": {
+        "correct": 0,
+        "total": 2
+      }
+    },
+    "truncation": {
+      "methodology": {
+        "correct": 597,
+        "total": 1016
+      },
+      "statistics": {
+        "correct": 782,
+        "total": 1392
+      },
+      "background": {
+        "correct": 661,
+        "total": 824
+      },
+      "findings": {
+        "correct": 365,
+        "total": 666
+      },
+      "conclusion": {
+        "correct": 179,
+        "total": 416
+      },
+      "literature review": {
+        "correct": 2,
+        "total": 2
+      },
+      "challenges": {
+        "correct": 2,
+        "total": 12
+      },
+      "results": {
+        "correct": 0,
+        "total": 2
+      },
+      "recommendation": {
+        "correct": 10,
+        "total": 14
+      },
+      "legislative language": {
+        "correct": 2,
+        "total": 2
+      },
+      "definitions": {
+        "correct": 4,
+        "total": 6
+      },
+      "limitations": {
+        "correct": 0,
+        "total": 2
+      },
+      "data": {
+        "correct": 0,
+        "total": 2
+      },
+      "defining burnout": {
+        "correct": 2,
+        "total": 2
+      },
+      "policy": {
+        "correct": 0,
+        "total": 2
+      }
+    },
+    "semantic_breakpoint": {
+      "statistics": {
+        "correct": 526,
+        "total": 1391
+      },
+      "methodology": {
+        "correct": 507,
+        "total": 1011
+      },
+      "background": {
+        "correct": 487,
+        "total": 823
+      },
+      "findings": {
+        "correct": 335,
+        "total": 664
+      },
+      "conclusion": {
+        "correct": 272,
+        "total": 415
+      },
+      "challenges": {
+        "correct": 1,
+        "total": 12
+      },
+      "definitions": {
+        "correct": 4,
+        "total": 6
+      },
+      "literature review": {
+        "correct": 0,
+        "total": 2
+      },
+      "recommendation": {
+        "correct": 1,
+        "total": 14
+      },
+      "limitations": {
+        "correct": 0,
+        "total": 2
+      },
+      "defining burnout": {
+        "correct": 1,
+        "total": 2
+      },
+      "policy": {
+        "correct": 0,
+        "total": 2
+      },
+      "legislative language": {
+        "correct": 2,
+        "total": 2
+      },
+      "data": {
+        "correct": 0,
+        "total": 2
+      },
+      "results": {
+        "correct": 0,
+        "total": 2
+      }
+    }
+  }
+}
