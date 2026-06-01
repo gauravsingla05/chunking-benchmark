@@ -17,6 +17,7 @@ import methods.truncation  # noqa: F401, E402
 import methods.fixed_size_first_last  # noqa: F401, E402
 import methods.semantic_breakpoint  # noqa: F401, E402
 import methods.pac_position_aware  # noqa: F401, E402
+import methods.recursive_character  # noqa: F401, E402
 from utils.text_io import iter_documents  # noqa: E402
 
 

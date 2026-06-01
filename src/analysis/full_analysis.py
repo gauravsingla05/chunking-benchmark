@@ -21,12 +21,13 @@ if str(SRC_DIR) not in sys.path:
 
 from config import DOCUMENTS_DIR, RESULTS_DIR
 
-METHODS = ["truncation", "fixed_size_first_last", "semantic_breakpoint", "pac_position_aware"]
+METHODS = ["truncation", "fixed_size_first_last", "semantic_breakpoint", "pac_position_aware", "recursive_character"]
 METHOD_NAMES = {
     "truncation": "Truncation",
     "fixed_size_first_last": "Fixed-Size",
     "semantic_breakpoint": "Semantic",
     "pac_position_aware": "PAC",
+    "recursive_character": "Recursive",
 }
 
 

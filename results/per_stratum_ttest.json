@@ -1,0 +1,290 @@
+{
+  "<5K": {
+    "n_unique_keys": 137,
+    "method_means": {
+      "pac_position_aware": {
+        "n": 137,
+        "mean": 4.2219,
+        "std": 0.3421
+      },
+      "semantic_breakpoint": {
+        "n": 137,
+        "mean": 4.2664,
+        "std": 0.2829
+      },
+      "truncation": {
+        "n": 137,
+        "mean": 4.219,
+        "std": 0.3284
+      },
+      "fixed_size_first_last": {
+        "n": 137,
+        "mean": 4.1533,
+        "std": 0.3206
+      },
+      "recursive_character": {
+        "n": 92,
+        "mean": 4.1739,
+        "std": 0.3354
+      }
+    },
+    "pac_vs_method": {
+      "truncation": {
+        "n_pairs": 137,
+        "pac_mean": 4.2219,
+        "other_mean": 4.219,
+        "diff_mean": 0.0029,
+        "t": 0.128,
+        "p": 0.89805,
+        "cohens_d": 0.011,
+        "significant_at_0.05": false
+      },
+      "fixed_size_first_last": {
+        "n_pairs": 137,
+        "pac_mean": 4.2219,
+        "other_mean": 4.1533,
+        "diff_mean": 0.0686,
+        "t": 2.559,
+        "p": 0.01159,
+        "cohens_d": 0.219,
+        "significant_at_0.05": true
+      },
+      "semantic_breakpoint": {
+        "n_pairs": 137,
+        "pac_mean": 4.2219,
+        "other_mean": 4.2664,
+        "diff_mean": -0.0445,
+        "t": -2.0,
+        "p": 0.04754,
+        "cohens_d": -0.171,
+        "significant_at_0.05": true
+      },
+      "recursive_character": {
+        "n_pairs": 92,
+        "pac_mean": 4.1739,
+        "other_mean": 4.1739,
+        "diff_mean": -0.0,
+        "t": -0.0,
+        "p": 1.0,
+        "cohens_d": -0.0,
+        "significant_at_0.05": false
+      }
+    }
+  },
+  "5-10K": {
+    "n_unique_keys": 216,
+    "method_means": {
+      "truncation": {
+        "n": 215,
+        "mean": 4.1874,
+        "std": 0.3539
+      },
+      "pac_position_aware": {
+        "n": 216,
+        "mean": 4.2667,
+        "std": 0.3252
+      },
+      "semantic_breakpoint": {
+        "n": 216,
+        "mean": 4.2245,
+        "std": 0.3112
+      },
+      "fixed_size_first_last": {
+        "n": 216,
+        "mean": 4.144,
+        "std": 0.3849
+      },
+      "recursive_character": {
+        "n": 143,
+        "mean": 4.1182,
+        "std": 0.3827
+      }
+    },
+    "pac_vs_method": {
+      "truncation": {
+        "n_pairs": 215,
+        "pac_mean": 4.2679,
+        "other_mean": 4.1874,
+        "diff_mean": 0.0805,
+        "t": 3.155,
+        "p": 0.00183,
+        "cohens_d": 0.215,
+        "significant_at_0.05": true
+      },
+      "fixed_size_first_last": {
+        "n_pairs": 216,
+        "pac_mean": 4.2667,
+        "other_mean": 4.144,
+        "diff_mean": 0.1227,
+        "t": 4.806,
+        "p": 0.0,
+        "cohens_d": 0.327,
+        "significant_at_0.05": true
+      },
+      "semantic_breakpoint": {
+        "n_pairs": 216,
+        "pac_mean": 4.2667,
+        "other_mean": 4.2245,
+        "diff_mean": 0.0421,
+        "t": 1.882,
+        "p": 0.06116,
+        "cohens_d": 0.128,
+        "significant_at_0.05": false
+      },
+      "recursive_character": {
+        "n_pairs": 143,
+        "pac_mean": 4.2231,
+        "other_mean": 4.1182,
+        "diff_mean": 0.1049,
+        "t": 2.955,
+        "p": 0.00366,
+        "cohens_d": 0.247,
+        "significant_at_0.05": true
+      }
+    }
+  },
+  "10-20K": {
+    "n_unique_keys": 171,
+    "method_means": {
+      "pac_position_aware": {
+        "n": 171,
+        "mean": 4.0076,
+        "std": 0.4609
+      },
+      "semantic_breakpoint": {
+        "n": 170,
+        "mean": 4.1382,
+        "std": 0.3316
+      },
+      "truncation": {
+        "n": 171,
+        "mean": 4.1363,
+        "std": 0.3654
+      },
+      "fixed_size_first_last": {
+        "n": 171,
+        "mean": 4.0889,
+        "std": 0.3565
+      },
+      "recursive_character": {
+        "n": 112,
+        "mean": 4.0946,
+        "std": 0.3309
+      }
+    },
+    "pac_vs_method": {
+      "truncation": {
+        "n_pairs": 171,
+        "pac_mean": 4.0076,
+        "other_mean": 4.1363,
+        "diff_mean": -0.1287,
+        "t": -3.275,
+        "p": 0.00128,
+        "cohens_d": -0.25,
+        "significant_at_0.05": true
+      },
+      "fixed_size_first_last": {
+        "n_pairs": 171,
+        "pac_mean": 4.0076,
+        "other_mean": 4.0889,
+        "diff_mean": -0.0813,
+        "t": -2.084,
+        "p": 0.03864,
+        "cohens_d": -0.159,
+        "significant_at_0.05": true
+      },
+      "semantic_breakpoint": {
+        "n_pairs": 170,
+        "pac_mean": 4.0059,
+        "other_mean": 4.1382,
+        "diff_mean": -0.1324,
+        "t": -3.655,
+        "p": 0.00034,
+        "cohens_d": -0.28,
+        "significant_at_0.05": true
+      },
+      "recursive_character": {
+        "n_pairs": 112,
+        "pac_mean": 3.9187,
+        "other_mean": 4.0946,
+        "diff_mean": -0.1759,
+        "t": -3.17,
+        "p": 0.00197,
+        "cohens_d": -0.299,
+        "significant_at_0.05": true
+      }
+    }
+  },
+  "20K+": {
+    "n_unique_keys": 129,
+    "method_means": {
+      "pac_position_aware": {
+        "n": 129,
+        "mean": 4.045,
+        "std": 0.4117
+      },
+      "fixed_size_first_last": {
+        "n": 129,
+        "mean": 4.0318,
+        "std": 0.3551
+      },
+      "semantic_breakpoint": {
+        "n": 128,
+        "mean": 3.9234,
+        "std": 0.3557
+      },
+      "truncation": {
+        "n": 129,
+        "mean": 4.124,
+        "std": 0.3504
+      },
+      "recursive_character": {
+        "n": 70,
+        "mean": 4.11,
+        "std": 0.3742
+      }
+    },
+    "pac_vs_method": {
+      "truncation": {
+        "n_pairs": 129,
+        "pac_mean": 4.045,
+        "other_mean": 4.124,
+        "diff_mean": -0.0791,
+        "t": -1.83,
+        "p": 0.06952,
+        "cohens_d": -0.161,
+        "significant_at_0.05": false
+      },
+      "fixed_size_first_last": {
+        "n_pairs": 129,
+        "pac_mean": 4.045,
+        "other_mean": 4.0318,
+        "diff_mean": 0.0132,
+        "t": 0.304,
+        "p": 0.76162,
+        "cohens_d": 0.027,
+        "significant_at_0.05": false
+      },
+      "semantic_breakpoint": {
+        "n_pairs": 128,
+        "pac_mean": 4.0437,
+        "other_mean": 3.9234,
+        "diff_mean": 0.1203,
+        "t": 2.488,
+        "p": 0.01413,
+        "cohens_d": 0.22,
+        "significant_at_0.05": true
+      },
+      "recursive_character": {
+        "n_pairs": 70,
+        "pac_mean": 4.0086,
+        "other_mean": 4.11,
+        "diff_mean": -0.1014,
+        "t": -1.6,
+        "p": 0.11417,
+        "cohens_d": -0.191,
+        "significant_at_0.05": false
+      }
+    }
+  }
+}

@@ -28,6 +28,7 @@ results/runs/
 results/qa/questions/
 results/qa/answers/
 results/qa/evaluations/
+results/qa/evaluations_gpt4o_mini/
 results/human_evaluation/*.html
 results/human_evaluation/*.csv
 
