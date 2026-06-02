@@ -44,7 +44,18 @@ results/verification_report.json
 # Jupyter
 .ipynb_checkpoints/
 
-# Compiled paper files
-paper/ieee-access-submission/*.pdf
-paper/ieee-access-submission/*.synctex.gz
-paper/resubmissions/
+# Manuscripts, drafts, fonts, and submission packages
+# (Repo hosts code + aggregated results only; manuscripts live elsewhere)
+paper/
+
+# Cited-paper PDFs (copyrighted; bib file already cites them)
+references/
+
+# Phantom nested folder left over from an early misdirected git add
+research-paper/
+
+# Personal images / profile photos not relevant to the codebase
+gourav_main_dp.png
+
+# Stale legacy results report (pre-dates the current 218-document study)
+EXPERIMENT_RESULTS.md
